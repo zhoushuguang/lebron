@@ -1,0 +1,12 @@
+type Request {
+	Name string `path:"name,options=you|me"`
+}
+
+type Response {
+	Message string `json:"message"`
+}
+
+service admin-api {
+	@handler AdminHandler
+	get /from/:name(Request) returns (Response)
+}
