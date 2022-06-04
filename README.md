@@ -1,2 +1,2 @@
 # lebron
-A highly concurrent system built on go-zero
+Highly concurrent mall system built on go-zero
