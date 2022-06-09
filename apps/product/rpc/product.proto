@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package product;
+option go_package="./product";
+
+service Product {
+  rpc Products(ProductRequest) returns(ProductResponse);
+}
+
+message ProductRequest {
+  string product_ids = 1;
+}
+
+message ProductResponse {
+  map<int64, ProductItem> products = 1;
+}
+
+message ProductItem {
+  int64 product_id = 1;
+  string name = 2;
+  string description = 3;
+  string image_url = 4;
+}

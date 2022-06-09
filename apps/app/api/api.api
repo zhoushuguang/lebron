@@ -1,12 +1,156 @@
-type Request {
-	Name string `path:"name,options=you|me"`
-}
+syntax = "v1"
 
-type Response {
-	Message string `json:"message"`
-}
+type (
+	HomeBannerResponse {
+		Banners []*Banner `json:"banners"`
+	}
+
+	Banner {
+		ID   int64  `json:"id"`
+		Name string `json:"name"` // 名称
+		URL  string `json:"url"`  // 图片地址
+	}
+
+	FlashSaleResponse {
+		StartTime int64      `json:"start_time"` // 抢购开始时间
+		Products  []*Product `json:"products"`
+	}
+
+	Product {
+		ID          int64   `json:"id"`          // 商品ID
+		Name        string  `json:"name"`        // 产品名称
+		Description string  `json:"description"` // 商品描述
+		Price       float64 `json:"price"`       // 商品价格
+		Stock       int64   `json:"stock"`       // 库存
+		Category    string  `json:"category"`    // 分类
+		Status      int64   `json:"status"`      // 状态：1-正常，2-下架
+		CreateTime  int64   `json:"create_time"` // 创建时间
+		UpdateTime  int64   `json:"update_time"` // 更新时间
+	}
+
+	RecommendRequest {
+		Cursor int64 `json:"cursor"`
+		Ps     int64 `form:"ps,default=20"` // 每页大小
+	}
+
+	RecommendResponse {
+		Products      []*Product `json:"products"`
+		IsEnd         bool       `json:"is_end"`         // 是否最后一页
+		RecommendTime int64      `json:"recommend_time"` // 商品列表最后一个商品的推荐时间
+	}
+
+	CategoryListRequest {
+		Cursor   int64  `form:"cursor"`        // 分页游标
+		Ps       int64  `form:"ps,default=20"` // 每页大小
+		Category string `form:"category"`      // 分类
+		Sort     string `form:"sort"`          // 排序
+	}
+
+	CategoryListResponse {
+		Products []*Product `json:"products"`
+		IsEnd    bool       `json:"is_end"`
+		LastVal  int64      `json:"last_val"`
+	}
+
+	CartListRequest {
+		UID int64 `form:"uid"`
+	}
+
+	CartListResponse {
+		Products []*CartProduct `json:"products"`
+	}
+
+	CartProduct {
+		Product *Product `json:"product"`
+		Count   int64    `json:"count"` // 购买数量
+	}
+
+	ProductCommentRequest {
+		ProductID int64 `form:"product_id"`
+		Cursor    int64 `form:"cursor"`
+		Ps        int64 `form:"ps,default=20"`
+	}
+
+	ProductCommentResponse {
+		Comments    []*Comment `json:"comments"`
+		IsEnd       bool       `json:"is_end"`       // 是否最后一页
+		CommentTime int64      `json:"comment_time"` // 评论列表最后一个评论的时间
+	}
+
+	Comment {
+		ID         int64    `json:"id"`          // 评论ID
+		ProductID  int64    `json:"product_id"`  // 商品ID
+		Content    string   `json:"content"`     // 评论内容
+		Images     []*Image `json:"images"`      // 评论图片
+		User       *User    `json:"user"`        // 用户信息
+		CreateTime int64    `json:"create_time"` // 评论时间
+		UpdateTime int64    `json:"update_time"` // 更新时间
+	}
+
+	User {
+		ID     int64  `json:"id"`     // 用户ID
+		Name   string `json:"name"`   // 用户名
+		Avatar string `json:"avatar"` // 头像
+	}
+
+	Image {
+		ID  int64  `json:"id"`
+		URL string `json:"url"`
+	}
+
+	OrderListRequest {
+		UID    int64 `form:"uid"`
+		Status int32 `form:"status,optional"`
+		Cursor int64 `form:"cursor,optional"`
+		Ps     int64 `form:"ps,default=20"`
+	}
+
+	OrderListResponse {
+		Orders    []*Order `json:"orders"`
+		IsEnd     bool     `json:"is_end"` // 是否最后一页
+		OrderTime int64    `json:"order_time"`
+	}
+
+	Order {
+		OrderID            string  `json:"order_id"`
+		Status             int32   `json:"status"`
+		Quantity           int64   `json:"quantity"`
+		Payment            float64 `json:"payment"`
+		TotalPrice         float64 `json:"total_price"`
+		CreateTime         int64   `json:"create_time"`
+		ProductID          int64   `json:"product_id"`
+		ProductName        string  `json:"product_name"`
+		ProductImage       string  `json:"product_image"`
+		ProductDescription string  `json:"product_description"`
+	}
+)
 
 service api-api {
-	@handler ApiHandler
-	get /from/:name(Request) returns (Response)
+	@doc "首页Banner"
+	@handler HomeBannerHandler
+	get /v1/home/banner returns (HomeBannerResponse)
+	
+	@doc "限时抢购"
+	@handler FlashSaleHandler
+	get /v1/flashsale returns (FlashSaleResponse)
+	
+	@doc "推荐商品列表"
+	@handler RecommendHandler
+	get /v1/recommend (RecommendRequest) returns (RecommendResponse)
+	
+	@doc "分类商品列表"
+	@handler CategoryListHandler
+	get /v1/category/list (CategoryListRequest) returns (CategoryListResponse)
+	
+	@doc "购物车列表"
+	@handler CartListHandler
+	get /v1/cart/list (CartListRequest) returns (CartListResponse)
+	
+	@doc "商品评论列表"
+	@handler ProductCommentHandler
+	get /v1/product/comment (ProductCommentRequest) returns (ProductCommentResponse)
+	
+	@doc "订单列表"
+	@handler OrderListHandler
+	get /v1/order/list (OrderListRequest) returns (OrderListResponse)
 }
