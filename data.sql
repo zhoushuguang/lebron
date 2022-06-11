@@ -86,7 +86,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
 CREATE TABLE `orderitem` (
-     `id` bigint(20) UNSIGNED NOT NULL COMMENT '订单子表id',
+     `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '订单子表id',
      `orderid` varchar(64) NOT NULL DEFAULT '' COMMENT '订单id',
      `userid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id',
      `proid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品id',
@@ -104,7 +104,7 @@ CREATE TABLE `orderitem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单明细表';
 
 CREATE TABLE `shopping` (
-    `id` bigint(20) UNSIGNED NOT NULL COMMENT '收货信息表id',
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '收货信息表id',
     `orderid` varchar(64) NOT NULL DEFAULT '' COMMENT '订单id',
     `userid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id',
     `receiver_name` varchar(20) NOT NULL DEFAULT '' COMMENT '收货姓名',
@@ -125,7 +125,7 @@ CREATE DATABASE pay;
 USE pay;
 
 CREATE TABLE `payinfo` (
-    `id` bigint(20) UNSIGNED NOT NULL COMMENT '支付信息表id',
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '支付信息表id',
     `orderid` varchar(64) NOT NULL DEFAULT '' COMMENT '订单id',
     `userid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id',
     `payplatform` tinyint(4) NOT NULL DEFAULT 0 COMMENT '支付平台:1-支付宝,2-微信',
@@ -137,3 +137,21 @@ CREATE TABLE `payinfo` (
     KEY `ix_orderid` (`orderid`),
     KEY `ix_userid` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='支付信息表';
+
+CREATE DATABASE reply;
+USE reply;
+
+CREATE TABLE `reply`(
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论表id',
+    `business` varchar(64) NOT NULL DEFAULT '' COMMENT '评论业务类型',
+    `targetid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论目标id',
+    `reply_userid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复用户id',
+    `be_reply_userid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '被回复用户id',
+    `parentid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '父评论id',
+    `content` varchar(255) NOT NULL DEFAULT '' COMMENT '评论内容',
+    `image` varchar(255) NOT NULL DEFAULT '' COMMENT '评论图片',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `ix_targetid` (`targetid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='评论列表';

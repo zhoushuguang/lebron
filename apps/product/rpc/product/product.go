@@ -12,6 +12,7 @@ import (
 
 type (
 	Product interface {
+		Product(ctx context.Context, in *ProductItemRequest, opts ...grpc.CallOption) (*ProductItem, error)
 		Products(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*ProductResponse, error)
 	}
 
@@ -24,6 +25,11 @@ func NewProduct(cli zrpc.Client) Product {
 	return &defaultProduct{
 		cli: cli,
 	}
+}
+
+func (m *defaultProduct) Product(ctx context.Context, in *ProductItemRequest, opts ...grpc.CallOption) (*ProductItem, error) {
+	client := NewProductClient(m.cli.Conn())
+	return client.Product(ctx, in, opts...)
 }
 
 func (m *defaultProduct) Products(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*ProductResponse, error) {

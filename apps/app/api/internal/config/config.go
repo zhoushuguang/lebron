@@ -9,4 +9,5 @@ type Config struct {
 	rest.RestConf
 	OrderRPC zrpc.RpcClientConf
 	ProductRPC zrpc.RpcClientConf
+	ReplyRPC zrpc.RpcClientConf
 }
