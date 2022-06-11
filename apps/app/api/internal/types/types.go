@@ -17,15 +17,16 @@ type FlashSaleResponse struct {
 }
 
 type Product struct {
-	ID          int64   `json:"id"`          // 商品ID
-	Name        string  `json:"name"`        // 产品名称
-	Description string  `json:"description"` // 商品描述
-	Price       float64 `json:"price"`       // 商品价格
-	Stock       int64   `json:"stock"`       // 库存
-	Category    string  `json:"category"`    // 分类
-	Status      int64   `json:"status"`      // 状态：1-正常，2-下架
-	CreateTime  int64   `json:"create_time"` // 创建时间
-	UpdateTime  int64   `json:"update_time"` // 更新时间
+	ID          int64    `json:"id"`          // 商品ID
+	Name        string   `json:"name"`        // 产品名称
+	Images      []string `json:"images"`      // 图片
+	Description string   `json:"description"` // 商品描述
+	Price       float64  `json:"price"`       // 商品价格
+	Stock       int64    `json:"stock"`       // 库存
+	Category    string   `json:"category"`    // 分类
+	Status      int64    `json:"status"`      // 状态：1-正常，2-下架
+	CreateTime  int64    `json:"create_time"` // 创建时间
+	UpdateTime  int64    `json:"update_time"` // 更新时间
 }
 
 type RecommendRequest struct {
@@ -122,4 +123,13 @@ type Order struct {
 	ProductName        string  `json:"product_name"`
 	ProductImage       string  `json:"product_image"`
 	ProductDescription string  `json:"product_description"`
+}
+
+type ProductDetailRequest struct {
+	ProductID int64 `form:"product_id"`
+}
+
+type ProductDetailResponse struct {
+	Product  *Product   `json:"product"`
+	Comments []*Comment `json:"comments"`
 }

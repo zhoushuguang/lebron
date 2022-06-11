@@ -11,3 +11,9 @@ ProductRPC:
     Hosts:
       - 127.0.0.1:2379
     Key: product.rpc
+ReplyRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: reply.rpc
+  NonBlock: true

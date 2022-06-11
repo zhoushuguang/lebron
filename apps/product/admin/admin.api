@@ -1,12 +1,12 @@
-type Request {
-	Name string `path:"name,options=you|me"`
-}
+syntax = "v1"
 
-type Response {
-	Message string `json:"message"`
-}
+type (
+	UploadImageResponse {
+		Success bool `json:"success"`
+	}
+)
 
 service admin-api {
-	@handler AdminHandler
-	get /from/:name(Request) returns (Response)
+	@handler UploadImageHandler
+	post /v1/upload/image() returns (UploadImageResponse)
 }

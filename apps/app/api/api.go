@@ -9,10 +9,15 @@ import (
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest"
 )
 
 var configFile = flag.String("f", "etc/api-api.yaml", "the config file")
+
+func init() {
+	logx.DisableStat()
+}
 
 func main() {
 	flag.Parse()
