@@ -4,7 +4,7 @@ Etcd:
   Hosts:
   - 127.0.0.1:2379
   Key: product.rpc
-DataSource: root:root@tcp(127.0.0.1:3306)/product?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+DataSource: root:123456@tcp(127.0.0.1:3306)/product?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 CacheRedis:
   - Host: 127.0.0.1:6379
     Pass:
