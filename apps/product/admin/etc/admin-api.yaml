@@ -1,6 +1,7 @@
 Name: admin-api
 Host: 0.0.0.0
 Port: 8888
+MaxBytes: 104857600 # 100MB
 OSSEndpoint: https://oss-cn-hangzhou.aliyuncs.com
 AccessKeyID: xxxxxxxxxxxx
 AccessKeySecret: xxxxxxxxxxxx
