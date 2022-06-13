@@ -3,10 +3,10 @@ package logic
 import (
 	"context"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/model"
-	"strings"
-
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/product"
+	"strconv"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/mr"
@@ -31,7 +31,8 @@ func (l *ProductsLogic) Products(in *product.ProductRequest) (*product.ProductRe
 	pdis := strings.Split(in.ProductIds, ",")
 	ps, err := mr.MapReduce(func(source chan<- interface{}) {
 		for _, pid := range pdis {
-			source <- pid
+			id, _ := strconv.ParseInt(pid, 10, 64)
+			source <- id
 		}
 	}, func(item interface{}, writer mr.Writer, cancel func(error)) {
 		pid := item.(int64)
