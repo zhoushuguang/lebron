@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/model"
+	"strconv"
 	"strings"
 
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/svc"
@@ -34,10 +35,13 @@ func (l *ProductsLogic) Products(in *product.ProductRequest) (*product.ProductRe
 			source <- pid
 		}
 	}, func(item interface{}, writer mr.Writer, cancel func(error)) {
-		pid := item.(int64)
+		pidStr := item.(string)
+		pid, err := strconv.ParseInt(pidStr, 10, 64)
+		if err != nil {
+			return
+		}
 		p, err := l.svcCtx.ProductModel.FindOne(l.ctx, pid)
 		if err != nil {
-			cancel(err)
 			return
 		}
 		writer.Write(p)
