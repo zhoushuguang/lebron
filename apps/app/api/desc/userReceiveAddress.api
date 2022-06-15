@@ -1,0 +1,68 @@
+syntax = "v1"
+
+info(
+    title: "用户收获地址管理"
+    desc: "用户收获地址管理"
+    author: "刘羽禅"
+    email: "18500606035@163.com"
+    version: "v1"
+)
+
+
+type UserReceiveAddress {
+    Id int64 `json:"id"`
+    Uid uint64 `json:"uid"`                      //用户id
+    Name string `json:"name"`                    //收货人名称
+    Phone string `json:"phone"`                  //手机号
+    IsDefault uint8 `json:"is_default"`          //是否为默认地址
+    PostCode string `json:"post_code"`           //邮政编码
+    Province string `json:"province"`            //省份/直辖市
+    City string `json:"city"`                    //城市
+    Region string `json:"region"`                //区
+    DetailAddress string `json:"detail_address"` //详细地址(街道)
+    IsDelete uint8 `json:"is_delete"`            //是否删除
+    CreateTime int64 `json:"create_time"`        //数据创建时间[禁止在代码中赋值]
+    UpdateTime int64 `json:"update_time"`        //数据更新时间[禁止在代码中赋值]
+}
+
+// 获取用户收货地址列表
+type (
+    UserReceiveAddressListReq {
+    }
+    UserReceiveAddressListRes {
+        List []UserReceiveAddress `json:"list"`
+    }
+)
+// 获取用户收货地址列表
+
+// 添加用户收货地址
+type (
+    UserReceiveAddressAddReq {
+        UserReceiveAddress UserReceiveAddress `json:"UserReceiveAddress"`
+    }
+    UserReceiveAddressAddRes {
+    }
+)
+// 添加用户收货地址
+
+// 编辑用户收货地址
+type (
+    UserReceiveAddressEditReq {
+        UserReceiveAddress UserReceiveAddress `json:"UserReceiveAddress"`
+    }
+    UserReceiveAddressEditRes {
+    }
+)
+// 编辑用户收货地址
+
+// 删除用户收货地址
+type (
+    UserReceiveAddressDelReq {
+        Id int64 `json:"id"`
+    }
+    UserReceiveAddressDelRes {
+    }
+)
+    // 删除用户收货地址
+
+

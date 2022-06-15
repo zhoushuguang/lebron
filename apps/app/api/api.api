@@ -1,5 +1,9 @@
 syntax = "v1"
 
+import (
+	"desc/userReceiveAddress.api"
+)
+
 type (
 	HomeBannerResponse {
 		Banners []*Banner `json:"banners"`
