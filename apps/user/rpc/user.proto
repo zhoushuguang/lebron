@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "./user";
+
+message UserInfo {
+  uint64 Id = 1;          //用户ID
+  string Username = 2;   //用户名
+  string Password = 3;   //用户密码，MD5加密
+  string Phone = 4;   //手机号
+  string Question = 5;   //找回密码问题
+  string Answer = 6;   //找回密码答案
+  int64  CreateTime = 7;  //创建时间
+  int64  UpdateTime = 8;  //更新时间
+}
+
+//用户登陆
+message LoginRequest {
+  string Username = 1;
+  string Password = 2;
+}
+
+message LoginResponse {
+  int64 Id = 1;
+  string Username = 2;
+  string Phone = 3;
+}
+//用户登陆
+
+// 用户信息
+message UserInfoRequest {
+  int64 Id = 1;
+}
+
+message UserInfoResponse {
+  UserInfo user = 1;
+}
+// 用户信息
+
+
+service User {
+  rpc Login(LoginRequest) returns(LoginResponse);
+  rpc UserInfo(UserInfoRequest) returns(UserInfoResponse);
+}
+

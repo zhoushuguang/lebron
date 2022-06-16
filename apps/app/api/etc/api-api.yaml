@@ -1,21 +1,35 @@
 Name: api-api
 Host: 0.0.0.0
-Port: 8888
+Port: 8000
+
+JwtAuth:
+  AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
+  AccessExpire: 86400
+
 OrderRPC:
-    Etcd:
-        Hosts:
-          - 127.0.0.1:2379
-        Key: order.rpc
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: order.rpc
+  NonBlock: true
 ProductRPC:
   Etcd:
     Hosts:
       - 127.0.0.1:2379
     Key: product.rpc
+  NonBlock: true
 ReplyRPC:
   Etcd:
     Hosts:
       - 127.0.0.1:2379
     Key: reply.rpc
   NonBlock: true
+UserRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+  NonBlock: true
+
 Telemetry:
   Endpoint: http://127.0.0.1:14268/api/traces

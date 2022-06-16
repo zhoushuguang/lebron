@@ -1,17 +1,20 @@
+/*========================>database user <===================================*/
 CREATE DATABASE user;
 USE user;
 
 CREATE TABLE `user` (
-    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-    `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
-    `password` varchar(50) NOT NULL DEFAULT '' COMMENT '用户密码，MD5加密',
-    `phone` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号',
-    `question` varchar(100) NOT NULL DEFAULT '' COMMENT '找回密码问题',
-    `answer` varchar(100) NOT NULL DEFAULT '' COMMENT '找回密码答案',
-    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (`id`),
-    KEY `ix_update_time` (`update_time`)
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
+  `password` varchar(50) NOT NULL DEFAULT '' COMMENT '用户密码，MD5加密',
+  `phone` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号',
+  `question` varchar(100) NOT NULL DEFAULT '' COMMENT '找回密码问题',
+  `answer` varchar(100) NOT NULL DEFAULT '' COMMENT '找回密码答案',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_phone` (`phone`),
+  UNIQUE KEY `uniq_username` (`username`),
+  KEY `ix_update_time` (`update_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 CREATE TABLE `user_receive_address` (
@@ -32,6 +35,8 @@ CREATE TABLE `user_receive_address` (
   KEY `idx_uid` (`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='用户收货地址表';
 
+
+/*========================>database product <===================================*/
 CREATE DATABASE product;
 USE product;
 
@@ -63,7 +68,7 @@ CREATE TABLE `category` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品类别表';
 
-
+/*========================>database cart <===================================*/
 CREATE DATABASE cart;
 USE cart;
 
@@ -81,6 +86,7 @@ CREATE TABLE `cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='购物车表';
 
 
+/*========================>database orders <===================================*/
 CREATE DATABASE orders;
 USE orders;
 
@@ -138,6 +144,8 @@ CREATE TABLE `shopping` (
     KEY `ix_userid` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='收货信息表';
 
+
+/*========================>database pay <===================================*/
 CREATE DATABASE pay;
 USE pay;
 
@@ -155,6 +163,8 @@ CREATE TABLE `payinfo` (
     KEY `ix_userid` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='支付信息表';
 
+
+/*========================>database reply <===================================*/
 CREATE DATABASE reply;
 USE reply;
 

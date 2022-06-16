@@ -7,7 +7,7 @@ import (
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/config"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/server"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
-	"github.com/zhoushuguang/lebron/apps/user/rpc/rpc"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -16,7 +16,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/rpc.yaml", "the config file")
+var configFile = flag.String("f", "etc/user.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -24,10 +24,10 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)
-	svr := server.NewRpcServer(ctx)
+	svr := server.NewUserServer(ctx)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		rpc.RegisterRpcServer(grpcServer, svr)
+		user.RegisterUserServer(grpcServer, svr)
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

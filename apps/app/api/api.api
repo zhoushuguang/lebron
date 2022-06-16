@@ -2,6 +2,7 @@ syntax = "v1"
 
 import (
 	"desc/userReceiveAddress.api"
+	"desc/user.api"
 )
 
 type (
@@ -171,4 +172,34 @@ service api-api {
 	@doc "商品详情"
 	@handler ProductDetailHandler
 	get /v1/product/detail (ProductDetailRequest) returns (ProductDetailResponse)
+}
+
+//========================> user-user v1 <===================================
+//no need login
+@server(
+	prefix: v1/user
+	group: user
+)
+service api-api {
+	
+	@doc "login"
+	@handler login
+	post /login (LoginReq) returns (LoginResp)
+}
+
+//need login
+@server(
+	prefix: v1/user
+	group: user
+	jwt: JwtAuth //使用jwt组件
+)
+service api-api {
+	
+	@doc "get user info"
+	@handler detail
+	post /info (UserInfoReq) returns (UserInfoResp)
+	
+	@doc "get user receiveAddress list"
+	@handler userRceiveAddressList
+	get /getReceiveAddressList (UserReceiveAddressListReq) returns (UserReceiveAddressListRes)
 }
