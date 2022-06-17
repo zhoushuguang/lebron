@@ -2,8 +2,9 @@ package result
 
 import (
 	"fmt"
-	"github.com/zhoushuguang/lebron/pkg/xerr"
 	"net/http"
+
+	"github.com/zhoushuguang/lebron/pkg/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -46,7 +47,6 @@ func HttpResult(r *http.Request, w http.ResponseWriter, resp interface{}, err er
 
 //http auth error
 func AuthHttpResult(r *http.Request, w http.ResponseWriter, resp interface{}, err error) {
-
 	if err == nil {
 		//return success
 		r := Success(resp)

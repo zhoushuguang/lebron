@@ -30,7 +30,6 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
-
 	//verify user exists
 	userDB, err := l.svcCtx.UserModel.FindOneByUsername(l.ctx, in.Username)
 	if err != nil {
@@ -40,7 +39,8 @@ func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
 		return nil, err
 	}
 	//verify user password
-	if !(tool.Md5ByString(in.Password) == userDB.Password) {
+	md5ByString, err := tool.Md5ByString(in.Password)
+	if !(md5ByString == userDB.Password) {
 		return nil, errors.Wrap(xerr.NewErrMsg("账号或密码错误"), "密码错误")
 	}
 
@@ -49,5 +49,4 @@ func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
 	_ = copier.Copy(&resp, userDB)
 
 	return &resp, nil
-
 }
