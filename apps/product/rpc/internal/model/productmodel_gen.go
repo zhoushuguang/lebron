@@ -39,17 +39,17 @@ type (
 	}
 
 	Product struct {
-		Id         int64          `db:"id"`          // 商品id
-		Cateid     int64          `db:"cateid"`      // 类别Id
-		Name       string         `db:"name"`        // 商品名称
-		Subtitle   string         `db:"subtitle"`    // 商品副标题
-		Images     sql.NullString `db:"images"`      // 图片地址,json格式,扩展用
-		Detail     sql.NullString `db:"detail"`      // 商品详情
-		Price      float64        `db:"price"`       // 价格,单位-元保留两位小数
-		Stock      int64          `db:"stock"`       // 库存数量
-		Status     int64          `db:"status"`      // 商品状态.1-在售 2-下架 3-删除
-		CreateTime time.Time      `db:"create_time"` // 创建时间
-		UpdateTime time.Time      `db:"update_time"` // 更新时间
+		Id         int64     `db:"id"`          // 商品id
+		Cateid     int64     `db:"cateid"`      // 类别Id
+		Name       string    `db:"name"`        // 商品名称
+		Subtitle   string    `db:"subtitle"`    // 商品副标题
+		Images     string    `db:"images"`      // 图片地址,逗号分隔
+		Detail     string    `db:"detail"`      // 商品详情
+		Price      float64   `db:"price"`       // 价格,单位-元保留两位小数
+		Stock      int64     `db:"stock"`       // 库存数量
+		Status     int64     `db:"status"`      // 商品状态.1-在售 2-下架 3-删除
+		CreateTime time.Time `db:"create_time"` // 创建时间
+		UpdateTime time.Time `db:"update_time"` // 更新时间
 	}
 )
 
