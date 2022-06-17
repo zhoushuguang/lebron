@@ -2,12 +2,12 @@ package logic
 
 import (
 	"context"
+
 	"github.com/jinzhu/copier"
 	"github.com/zhoushuguang/lebron/apps/user/model"
-	"google.golang.org/grpc/status"
-
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
-	"github.com/zhoushuguang/lebron/apps/user/rpc/types/user"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
+	"google.golang.org/grpc/status"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -34,9 +34,11 @@ func (l *UserInfoLogic) UserInfo(in *user.UserInfoRequest) (*user.UserInfoRespon
 		}
 		return nil, status.Error(500, err.Error())
 	}
-
-	var resp user.UserInfoResponse
+	var resp user.UserInfo
 	_ = copier.Copy(&resp, umsMember)
-
-	return &resp, nil
+	resp.CreateTime = umsMember.CreateTime.Unix()
+	resp.UpdateTime = umsMember.UpdateTime.Unix()
+	return &user.UserInfoResponse{
+		User: &resp,
+	}, nil
 }

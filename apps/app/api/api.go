@@ -1,4 +1,4 @@
- 	package main
+package main
 
 import (
 	"flag"
@@ -21,6 +21,9 @@ func init() {
 
 func main() {
 	flag.Parse()
+
+	//close statis log
+	logx.DisableStat()
 
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
