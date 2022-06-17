@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	user "github.com/zhoushuguang/lebron/apps/app/api/internal/handler/user"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -53,5 +54,33 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: ProductDetailHandler(serverCtx),
 			},
 		},
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/login",
+				Handler: user.LoginHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/v1/user"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/info",
+				Handler: user.DetailHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/getReceiveAddressList",
+				Handler: user.UserRceiveAddressListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/v1/user"),
 	)
 }

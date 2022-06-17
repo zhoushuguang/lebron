@@ -133,3 +133,75 @@ type ProductDetailResponse struct {
 	Product  *Product   `json:"product"`
 	Comments []*Comment `json:"comments"`
 }
+
+type UserReceiveAddress struct {
+	Id            int64  `json:"id"`
+	Uid           uint64 `json:"uid"`            //用户id
+	Name          string `json:"name"`           //收货人名称
+	Phone         string `json:"phone"`          //手机号
+	IsDefault     uint8  `json:"is_default"`     //是否为默认地址
+	PostCode      string `json:"post_code"`      //邮政编码
+	Province      string `json:"province"`       //省份/直辖市
+	City          string `json:"city"`           //城市
+	Region        string `json:"region"`         //区
+	DetailAddress string `json:"detail_address"` //详细地址(街道)
+	IsDelete      uint8  `json:"is_delete"`      //是否删除
+	CreateTime    int64  `json:"create_time"`    //数据创建时间[禁止在代码中赋值]
+	UpdateTime    int64  `json:"update_time"`    //数据更新时间[禁止在代码中赋值]
+}
+
+type UserReceiveAddressListReq struct {
+}
+
+type UserReceiveAddressListRes struct {
+	List []UserReceiveAddress `json:"list"`
+}
+
+type UserReceiveAddressAddReq struct {
+	UserReceiveAddress UserReceiveAddress `json:"UserReceiveAddress"`
+}
+
+type UserReceiveAddressAddRes struct {
+}
+
+type UserReceiveAddressEditReq struct {
+	UserReceiveAddress UserReceiveAddress `json:"UserReceiveAddress"`
+}
+
+type UserReceiveAddressEditRes struct {
+}
+
+type UserReceiveAddressDelReq struct {
+	Id int64 `json:"id"`
+}
+
+type UserReceiveAddressDelRes struct {
+}
+
+type UserInfo struct {
+	Id         uint64 `json:"id"`          //用户ID
+	Username   string `json:"username"`    //用户名
+	Password   string `json:"password"`    //用户密码，MD5加密
+	Phone      string `json:"phone"`       //手机号
+	Question   string `json:"question"`    //找回密码问题
+	Answer     string `json:"answer"`      //找回密码答案
+	CreateTime int64  `json:"create_time"` //创建时间
+	UpdateTime int64  `json:"update_time"` //更新时间
+}
+
+type LoginReq struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type LoginResp struct {
+	AccessToken  string `json:"accessToken"`
+	AccessExpire int64  `json:"accessExpire"`
+}
+
+type UserInfoReq struct {
+}
+
+type UserInfoResp struct {
+	UserInfo UserInfo `json:"userInfo"`
+}

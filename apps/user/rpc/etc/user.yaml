@@ -1,0 +1,17 @@
+Name: user.rpc
+ListenOn: 127.0.0.1:9001
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: user.rpc
+
+Mysql:
+  DataSource: root:123456@tcp(127.0.0.1:3306)/user?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Type: node
+    Pass:
+
+#用户密码加密时使用
+Salt: HWVOFkGgPTryzICwd7qnJaZR9KQ2i8xe

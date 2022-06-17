@@ -1,0 +1,44 @@
+syntax = "v1"
+
+info(
+	title: "用户管理"
+	desc: "用户管理"
+	author: "刘羽禅"
+	email: "18500606035@163.com"
+	version: "v1"
+)
+
+type UserInfo {
+    Id         uint64 `json:"id"`          //用户ID
+    Username   string `json:"username"`    //用户名
+    Password   string `json:"password"`    //用户密码，MD5加密
+    Phone      string `json:"phone"`       //手机号
+    Question   string `json:"question"`    //找回密码问题
+    Answer     string `json:"answer"`      //找回密码答案
+    CreateTime int64  `json:"create_time"` //创建时间
+    UpdateTime int64  `json:"update_time"` //更新时间
+}
+
+
+//用户登陆
+type LoginReq {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type LoginResp {
+	AccessToken  string `json:"accessToken"`
+	AccessExpire int64  `json:"accessExpire"`
+}
+//用户登陆
+
+
+//用户详情
+type (
+    UserInfoReq {
+    }
+    UserInfoResp {
+        UserInfo UserInfo `json:"userInfo"`
+    }
+)
+//用户详情
