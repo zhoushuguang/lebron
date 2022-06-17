@@ -3,7 +3,7 @@ package result
 type ResponseSuccessBean struct {
 	Code uint32      `json:"code"`
 	Msg  string      `json:"msg"`
-	Data interface{} `json:"data"`
+	Data interface{} `json:"sql"`
 }
 type NullJson struct{}
 

@@ -44,7 +44,7 @@ func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
 		return nil, errors.Wrap(xerr.NewErrMsg("账号或密码错误"), "密码错误")
 	}
 
-	//return data
+	//return sql
 	var resp user.LoginResponse
 	_ = copier.Copy(&resp, userDB)
 
