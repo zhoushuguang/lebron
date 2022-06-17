@@ -2,14 +2,14 @@ package logic
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"github.com/zhoushuguang/lebron/apps/user/model"
-	"github.com/zhoushuguang/lebron/pkg/tool"
-	"github.com/zhoushuguang/lebron/pkg/xerr"
-	"google.golang.org/grpc/status"
 
+	"github.com/pkg/errors"
+
+	"github.com/zhoushuguang/lebron/apps/user/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/types/user"
+	"github.com/zhoushuguang/lebron/pkg/tool"
+	"github.com/zhoushuguang/lebron/pkg/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -37,7 +37,7 @@ func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
 		if err == model.ErrNotFound {
 			return nil, errors.Wrapf(xerr.NewErrCode(xerr.DbError), "根据username查询用户信息失败，username:%s,err:%v", in.Username, err)
 		}
-		return nil, status.Error(500, err.Error())
+		return nil, err
 	}
 	//verify user password
 	if !(tool.Md5ByString(in.Password) == userDB.Password) {

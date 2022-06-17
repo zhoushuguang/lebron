@@ -1,8 +1,9 @@
 package user
 
 import (
-	"github.com/zhoushuguang/lebron/pkg/result"
 	"net/http"
+
+	"github.com/zhoushuguang/lebron/pkg/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/logic/user"
