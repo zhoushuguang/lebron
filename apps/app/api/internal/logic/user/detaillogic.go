@@ -36,7 +36,10 @@ func (l *DetailLogic) Detail(req *types.UserInfoReq) (resp *types.UserInfoResp, 
 		return nil, err
 	}
 
-	resp = new(types.UserInfoResp)
-	_ = copier.Copy(&resp, userInfo)
-	return resp, nil
+	var user types.UserInfo
+	_ = copier.Copy(&user, userInfo.User)
+
+	return &types.UserInfoResp{
+		UserInfo: user,
+	}, nil
 }

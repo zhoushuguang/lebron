@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/config"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/server"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
@@ -20,6 +21,9 @@ var configFile = flag.String("f", "etc/user.yaml", "the config file")
 
 func main() {
 	flag.Parse()
+
+	//close statis log
+	logx.DisableStat()
 
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
