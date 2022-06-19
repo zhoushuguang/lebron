@@ -33,3 +33,27 @@ func (s *UserServer) UserInfo(ctx context.Context, in *user.UserInfoRequest) (*u
 	l := logic.NewUserInfoLogic(ctx, s.svcCtx)
 	return l.UserInfo(in)
 }
+
+// 添加收获地址
+func (s *UserServer) AddUserReceiveAddress(ctx context.Context, in *user.UserReceiveAddressAddReq) (*user.UserReceiveAddressAddRes, error) {
+	l := logic.NewAddUserReceiveAddressLogic(ctx, s.svcCtx)
+	return l.AddUserReceiveAddress(in)
+}
+
+// 编辑收获地址
+func (s *UserServer) EditUserReceiveAddress(ctx context.Context, in *user.UserReceiveAddressEditReq) (*user.UserReceiveAddressEditRes, error) {
+	l := logic.NewEditUserReceiveAddressLogic(ctx, s.svcCtx)
+	return l.EditUserReceiveAddress(in)
+}
+
+// 删除收获地址
+func (s *UserServer) DelUserReceiveAddress(ctx context.Context, in *user.UserReceiveAddressDelReq) (*user.UserReceiveAddressDelRes, error) {
+	l := logic.NewDelUserReceiveAddressLogic(ctx, s.svcCtx)
+	return l.DelUserReceiveAddress(in)
+}
+
+// 获取收获地址列表
+func (s *UserServer) GetUserReceiveAddressList(ctx context.Context, in *user.UserReceiveAddressListReq) (*user.UserReceiveAddressListRes, error) {
+	l := logic.NewGetUserReceiveAddressListLogic(ctx, s.svcCtx)
+	return l.GetUserReceiveAddressList(in)
+}
