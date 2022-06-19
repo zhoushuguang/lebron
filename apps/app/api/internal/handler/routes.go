@@ -76,8 +76,23 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
+				Path:    "/addReceiveAddress",
+				Handler: user.AddReceiveAddressHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/editReceiveAddress",
+				Handler: user.EditReceiveAddressHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/delReceiveAddress",
+				Handler: user.DelReceiveAddressHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
 				Path:    "/getReceiveAddressList",
-				Handler: user.UserRceiveAddressListHandler(serverCtx),
+				Handler: user.UserReceiveAddressListHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

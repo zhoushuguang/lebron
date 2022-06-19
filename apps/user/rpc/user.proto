@@ -39,8 +39,12 @@ message UserInfoResponse {
 // 用户信息
 
 
+
+
 service User {
+  //登录
   rpc Login(LoginRequest) returns(LoginResponse);
+  //获取用户信息
   rpc UserInfo(UserInfoRequest) returns(UserInfoResponse);
 }
 

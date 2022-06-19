@@ -8,7 +8,7 @@ import (
 
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/logic"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
-	"github.com/zhoushuguang/lebron/apps/user/rpc/types/user"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
 )
 
 type UserServer struct {
@@ -22,11 +22,13 @@ func NewUserServer(svcCtx *svc.ServiceContext) *UserServer {
 	}
 }
 
+// 登录
 func (s *UserServer) Login(ctx context.Context, in *user.LoginRequest) (*user.LoginResponse, error) {
 	l := logic.NewLoginLogic(ctx, s.svcCtx)
 	return l.Login(in)
 }
 
+// 获取用户信息
 func (s *UserServer) UserInfo(ctx context.Context, in *user.UserInfoRequest) (*user.UserInfoResponse, error) {
 	l := logic.NewUserInfoLogic(ctx, s.svcCtx)
 	return l.UserInfo(in)

@@ -3,12 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"github.com/zeromicro/go-zero/core/logx"
+
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/config"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/server"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
-	"github.com/zhoushuguang/lebron/apps/user/rpc/types/user"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

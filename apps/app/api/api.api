@@ -181,7 +181,6 @@ service api-api {
 	group: user
 )
 service api-api {
-	
 	@doc "login"
 	@handler login
 	post /login (LoginReq) returns (LoginResp)
@@ -194,12 +193,23 @@ service api-api {
 	jwt: JwtAuth //使用jwt组件
 )
 service api-api {
-	
 	@doc "get user info"
 	@handler detail
 	post /info (UserInfoReq) returns (UserInfoResp)
 	
+	@doc "add user receiveAddress"
+	@handler addReceiveAddress
+	get /addReceiveAddress (UserReceiveAddressAddReq) returns (UserReceiveAddressAddRes)
+	
+	@doc "edit user receiveAddress list"
+	@handler editReceiveAddress
+	get /editReceiveAddress (UserReceiveAddressEditReq) returns (UserReceiveAddressEditRes)
+	
+	@doc "del user receiveAddress list"
+	@handler delReceiveAddress
+	get /delReceiveAddress (UserReceiveAddressDelReq) returns (UserReceiveAddressDelRes)
+	
 	@doc "get user receiveAddress list"
-	@handler userRceiveAddressList
+	@handler userReceiveAddressList
 	get /getReceiveAddressList (UserReceiveAddressListReq) returns (UserReceiveAddressListRes)
 }

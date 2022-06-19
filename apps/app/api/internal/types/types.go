@@ -158,14 +158,29 @@ type UserReceiveAddressListRes struct {
 }
 
 type UserReceiveAddressAddReq struct {
-	UserReceiveAddress UserReceiveAddress `json:"UserReceiveAddress"`
+	Name          string `json:"name"`           //收货人名称
+	Phone         string `json:"phone"`          //手机号
+	IsDefault     uint8  `json:"is_default"`     //是否为默认地址
+	PostCode      string `json:"post_code"`      //邮政编码
+	Province      string `json:"province"`       //省份/直辖市
+	City          string `json:"city"`           //城市
+	Region        string `json:"region"`         //区
+	DetailAddress string `json:"detail_address"` //详细地址(街道)
 }
 
 type UserReceiveAddressAddRes struct {
 }
 
 type UserReceiveAddressEditReq struct {
-	UserReceiveAddress UserReceiveAddress `json:"UserReceiveAddress"`
+	Id            int64  `json:"id"`
+	Name          string `json:"name"`           //收货人名称
+	Phone         string `json:"phone"`          //手机号
+	IsDefault     uint8  `json:"is_default"`     //是否为默认地址
+	PostCode      string `json:"post_code"`      //邮政编码
+	Province      string `json:"province"`       //省份/直辖市
+	City          string `json:"city"`           //城市
+	Region        string `json:"region"`         //区
+	DetailAddress string `json:"detail_address"` //详细地址(街道)
 }
 
 type UserReceiveAddressEditRes struct {
