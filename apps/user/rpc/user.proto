@@ -110,18 +110,40 @@ message UserReceiveAddressDelRes {
 //删除收获地址
 
 
+message  Collection{
+  uint64  Id = 1;               // 收藏Id
+  int64   Uid = 2;              // 用户id
+  int64   ProductId = 3;        // 商品id
+  int64   IsDelete = 4;         // 是否删除
+  int64   CreateTime = 5;       // 数据创建时间[禁止在代码中赋值]
+  int64   int64UpdateTime = 6;  // 数据更新时间[禁止在代码中赋值]
+}
+
+// 添加收藏
+message CollectionAddReq {
+  Collection collection = 1;
+}
+
+message CollectionAddRes {
+  int64   Code = 1;
+  string  Message = 2;
+}
+// 添加收藏
+
 service User {
-  //登录
+  // 登录
   rpc Login(LoginRequest) returns(LoginResponse);
-  //获取用户信息
+  // 获取用户信息
   rpc UserInfo(UserInfoRequest) returns(UserInfoResponse);
-  //添加收获地址
+  // 添加收获地址
   rpc addUserReceiveAddress(UserReceiveAddressAddReq) returns(UserReceiveAddressAddRes);
-  //编辑收获地址
+  // 编辑收获地址
   rpc editUserReceiveAddress(UserReceiveAddressEditReq) returns(UserReceiveAddressEditRes);
-  //删除收获地址
+  // 删除收获地址
   rpc delUserReceiveAddress(UserReceiveAddressDelReq) returns(UserReceiveAddressDelRes);
-  //获取收获地址列表
+  // 获取收获地址列表
   rpc getUserReceiveAddressList(UserReceiveAddressListReq) returns(UserReceiveAddressListRes);
+  // 添加收藏
+  rpc addCollection(CollectionAddReq) returns(CollectionAddRes);
 }
 

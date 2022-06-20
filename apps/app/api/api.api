@@ -3,6 +3,7 @@ syntax = "v1"
 import (
 	"desc/userReceiveAddress.api"
 	"desc/user.api"
+	"desc/collection.api"
 )
 
 type (
@@ -212,4 +213,8 @@ service api-api {
 	@doc "get user receiveAddress list"
 	@handler userReceiveAddressList
 	get /getReceiveAddressList (UserReceiveAddressListReq) returns (UserReceiveAddressListRes)
+	
+	@doc "添加收藏 -- Add collection"
+	@handler userCollectionAdd
+	post /collection/add (CollectionAddReq) returns (CollectionAddRes)
 }

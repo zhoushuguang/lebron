@@ -220,3 +220,21 @@ type UserInfoReq struct {
 type UserInfoResp struct {
 	UserInfo UserInfo `json:"userInfo"`
 }
+
+type Collection struct {
+	Id         uint64 `json:"id,optional"`          // 收藏Id
+	Uid        int64  `json:"uid"`                  // 用户id
+	ProductId  int64  `json:"product_id"`           // 商品id
+	IsDelete   int64  `json:"is_delete,optional"`   // 是否删除
+	CreateTime int64  `json:"create_time,optional"` // 数据创建时间[禁止在代码中赋值]
+	UpdateTime int64  `json:"update_time,optional"` // 数据更新时间[禁止在代码中赋值]
+}
+
+type CollectionAddReq struct {
+	Collection Collection `json:"collection"`
+}
+
+type CollectionAddRes struct {
+	Code    int16  `json:"code"`
+	Message string `json:"message"`
+}

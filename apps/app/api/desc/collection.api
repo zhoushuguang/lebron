@@ -1,0 +1,33 @@
+syntax = "v1"
+
+info(
+	title: "用户收藏"
+	desc: "用户收藏"
+	author: "杨浩"
+	email: "go__zero@163.com"
+	version: "v1"
+)
+
+type  Collection{
+    Id         uint64    `json:"id,optional"`          // 收藏Id
+    Uid        int64     `json:"uid"`         // 用户id
+    ProductId  int64     `json:"product_id"`  // 商品id
+    IsDelete   int64     `json:"is_delete,optional"`   // 是否删除
+    CreateTime int64     `json:"create_time,optional"` // 数据创建时间[禁止在代码中赋值]
+    UpdateTime int64     `json:"update_time,optional"` // 数据更新时间[禁止在代码中赋值]
+}
+
+
+
+// 添加收藏
+type CollectionAddReq {
+    Collection Collection `json:"collection"`
+}
+
+type CollectionAddRes {
+    Code    int16   `json:"code"`
+    Message string  `json:"message"`
+}
+// 添加收藏
+
+
