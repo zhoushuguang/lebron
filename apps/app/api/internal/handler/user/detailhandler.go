@@ -7,6 +7,7 @@ import (
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/logic/user"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/types"
+	"github.com/zhoushuguang/lebron/pkg/result"
 )
 
 func DetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
@@ -19,10 +20,6 @@ func DetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := user.NewDetailLogic(r.Context(), svcCtx)
 		resp, err := l.Detail(&req)
-		if err != nil {
-			httpx.Error(w, err)
-		} else {
-			httpx.OkJson(w, resp)
-		}
+		result.HttpResult(r, w, resp, err)
 	}
 }

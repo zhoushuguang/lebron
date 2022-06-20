@@ -4,12 +4,14 @@ import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
+
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/logic/user"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/types"
+	"github.com/zhoushuguang/lebron/pkg/result"
 )
 
-func UserRceiveAddressListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UserReceiveAddressListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.UserReceiveAddressListReq
 		if err := httpx.Parse(r, &req); err != nil {
@@ -17,12 +19,8 @@ func UserRceiveAddressListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := user.NewUserRceiveAddressListLogic(r.Context(), svcCtx)
-		resp, err := l.UserRceiveAddressList(&req)
-		if err != nil {
-			httpx.Error(w, err)
-		} else {
-			httpx.OkJson(w, resp)
-		}
+		l := user.NewUserReceiveAddressListLogic(r.Context(), svcCtx)
+		resp, err := l.UserReceiveAddressList(&req)
+		result.HttpResult(r, w, resp, err)
 	}
 }

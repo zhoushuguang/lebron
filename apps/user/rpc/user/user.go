@@ -6,22 +6,24 @@ package user
 import (
 	"context"
 
-	"github.com/zhoushuguang/lebron/apps/user/rpc/types/user"
-
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	LoginRequest     = user.LoginRequest
-	LoginResponse    = user.LoginResponse
-	UserInfo         = user.UserInfo
-	UserInfoRequest  = user.UserInfoRequest
-	UserInfoResponse = user.UserInfoResponse
-
 	User interface {
+		// 登录
 		Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+		// 获取用户信息
 		UserInfo(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
+		// 添加收获地址
+		AddUserReceiveAddress(ctx context.Context, in *UserReceiveAddressAddReq, opts ...grpc.CallOption) (*UserReceiveAddressAddRes, error)
+		// 编辑收获地址
+		EditUserReceiveAddress(ctx context.Context, in *UserReceiveAddressEditReq, opts ...grpc.CallOption) (*UserReceiveAddressEditRes, error)
+		// 删除收获地址
+		DelUserReceiveAddress(ctx context.Context, in *UserReceiveAddressDelReq, opts ...grpc.CallOption) (*UserReceiveAddressDelRes, error)
+		// 获取收获地址列表
+		GetUserReceiveAddressList(ctx context.Context, in *UserReceiveAddressListReq, opts ...grpc.CallOption) (*UserReceiveAddressListRes, error)
 	}
 
 	defaultUser struct {
@@ -35,12 +37,38 @@ func NewUser(cli zrpc.Client) User {
 	}
 }
 
+// 登录
 func (m *defaultUser) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
-	client := user.NewUserClient(m.cli.Conn())
+	client := NewUserClient(m.cli.Conn())
 	return client.Login(ctx, in, opts...)
 }
 
+// 获取用户信息
 func (m *defaultUser) UserInfo(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error) {
-	client := user.NewUserClient(m.cli.Conn())
+	client := NewUserClient(m.cli.Conn())
 	return client.UserInfo(ctx, in, opts...)
+}
+
+// 添加收获地址
+func (m *defaultUser) AddUserReceiveAddress(ctx context.Context, in *UserReceiveAddressAddReq, opts ...grpc.CallOption) (*UserReceiveAddressAddRes, error) {
+	client := NewUserClient(m.cli.Conn())
+	return client.AddUserReceiveAddress(ctx, in, opts...)
+}
+
+// 编辑收获地址
+func (m *defaultUser) EditUserReceiveAddress(ctx context.Context, in *UserReceiveAddressEditReq, opts ...grpc.CallOption) (*UserReceiveAddressEditRes, error) {
+	client := NewUserClient(m.cli.Conn())
+	return client.EditUserReceiveAddress(ctx, in, opts...)
+}
+
+// 删除收获地址
+func (m *defaultUser) DelUserReceiveAddress(ctx context.Context, in *UserReceiveAddressDelReq, opts ...grpc.CallOption) (*UserReceiveAddressDelRes, error) {
+	client := NewUserClient(m.cli.Conn())
+	return client.DelUserReceiveAddress(ctx, in, opts...)
+}
+
+// 获取收获地址列表
+func (m *defaultUser) GetUserReceiveAddressList(ctx context.Context, in *UserReceiveAddressListReq, opts ...grpc.CallOption) (*UserReceiveAddressListRes, error) {
+	client := NewUserClient(m.cli.Conn())
+	return client.GetUserReceiveAddressList(ctx, in, opts...)
 }

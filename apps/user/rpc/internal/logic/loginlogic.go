@@ -2,12 +2,12 @@ package logic
 
 import (
 	"context"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
 
 	"github.com/pkg/errors"
 
 	"github.com/zhoushuguang/lebron/apps/user/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
-	"github.com/zhoushuguang/lebron/apps/user/rpc/types/user"
 	"github.com/zhoushuguang/lebron/pkg/tool"
 	"github.com/zhoushuguang/lebron/pkg/xerr"
 
