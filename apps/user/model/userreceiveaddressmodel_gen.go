@@ -43,13 +43,13 @@ type (
 		Uid           int64     `db:"uid"`            // 用户id
 		Name          string    `db:"name"`           // 收货人名称
 		Phone         string    `db:"phone"`          // 手机号
-		IsDefault     int64     `db:"is_default"`     // 是否为默认地址
+		IsDefault     int32     `db:"is_default"`     // 是否为默认地址
 		PostCode      string    `db:"post_code"`      // 邮政编码
 		Province      string    `db:"province"`       // 省份/直辖市
 		City          string    `db:"city"`           // 城市
 		Region        string    `db:"region"`         // 区
 		DetailAddress string    `db:"detail_address"` // 详细地址(街道)
-		IsDelete      int64     `db:"is_delete"`      // 是否删除
+		IsDelete      int32     `db:"is_delete"`      // 是否删除
 		CreateTime    time.Time `db:"create_time"`    // 数据创建时间[禁止在代码中赋值]
 		UpdateTime    time.Time `db:"update_time"`    // 数据更新时间[禁止在代码中赋值]
 	}

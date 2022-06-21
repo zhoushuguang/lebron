@@ -75,17 +75,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: user.DetailHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
+				Method:  http.MethodPost,
 				Path:    "/addReceiveAddress",
 				Handler: user.AddReceiveAddressHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
+				Method:  http.MethodPost,
 				Path:    "/editReceiveAddress",
 				Handler: user.EditReceiveAddressHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
+				Method:  http.MethodPost,
 				Path:    "/delReceiveAddress",
 				Handler: user.DelReceiveAddressHandler(serverCtx),
 			},
