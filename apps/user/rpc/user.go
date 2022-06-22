@@ -3,7 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zhoushuguang/lebron/pkg/interceptor/rpcserver"
 
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/config"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/server"
@@ -37,6 +39,10 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+
+	//add rpc service logger interceptor
+	s.AddUnaryInterceptors(rpcserver.LoggerInterceptor)
+
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

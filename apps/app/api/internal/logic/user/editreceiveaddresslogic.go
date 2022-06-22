@@ -3,8 +3,10 @@ package user
 import (
 	"context"
 
+	"github.com/jinzhu/copier"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/types"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +26,11 @@ func NewEditReceiveAddressLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 }
 
 func (l *EditReceiveAddressLogic) EditReceiveAddress(req *types.UserReceiveAddressEditReq) (resp *types.UserReceiveAddressEditRes, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	var editRpcReq user.UserReceiveAddressEditReq
+	copier.Copy(&editRpcReq, req)
+	_, err = l.svcCtx.UserRPC.EditUserReceiveAddress(l.ctx, &editRpcReq)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
