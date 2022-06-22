@@ -3,8 +3,13 @@ package logic
 import (
 	"context"
 
+	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
+	"github.com/zhoushuguang/lebron/apps/user/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
+	"github.com/zhoushuguang/lebron/pkg/xerr"
+	"google.golang.org/grpc/status"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +30,23 @@ func NewEditUserReceiveAddressLogic(ctx context.Context, svcCtx *svc.ServiceCont
 
 // EditUserReceiveAddress 编辑收获地址
 func (l *EditUserReceiveAddressLogic) EditUserReceiveAddress(in *user.UserReceiveAddressEditReq) (*user.UserReceiveAddressEditRes, error) {
-	// todo: add your logic here and delete this line
+	_, err := l.svcCtx.UserReceiveAddressModel.FindOne(l.ctx,in.Id)
+	if err != nil {
+		if err == model.ErrNotFound {
+			return nil, status.Error(100, "数据不存在")
+		}
+		return nil, err
+	}
 
+	//todo 限制,只能有一个默认地址
+	if in.IsDefault == 1 {
+
+	}
+	dbAddress := new(model.UserReceiveAddress)
+	copier.Copy(&dbAddress, in)
+	err = l.svcCtx.UserReceiveAddressModel.Update(l.ctx, dbAddress)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DbError), "AddUserReceiveAddress Database Exception : %+v , err: %v", dbAddress, err)
+	}
 	return &user.UserReceiveAddressEditRes{}, nil
 }

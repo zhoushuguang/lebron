@@ -735,7 +735,7 @@ type UserReceiveAddressEditReq struct {
 	Id            int64  `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
 	Name          string `protobuf:"bytes,2,opt,name=Name,proto3" json:"Name,omitempty"`                   //收货人名称
 	Phone         string `protobuf:"bytes,3,opt,name=Phone,proto3" json:"Phone,omitempty"`                 //手机号
-	IsDefault     uint32 `protobuf:"varint,4,opt,name=IsDefault,proto3" json:"IsDefault,omitempty"`        //是否为默认地址
+	IsDefault     int32 `protobuf:"varint,4,opt,name=IsDefault,proto3" json:"IsDefault,omitempty"`        //是否为默认地址
 	PostCode      string `protobuf:"bytes,5,opt,name=PostCode,proto3" json:"PostCode,omitempty"`           //邮政编码
 	Province      string `protobuf:"bytes,6,opt,name=Province,proto3" json:"Province,omitempty"`           //省份/直辖市
 	City          string `protobuf:"bytes,7,opt,name=City,proto3" json:"City,omitempty"`                   //城市
@@ -796,7 +796,7 @@ func (x *UserReceiveAddressEditReq) GetPhone() string {
 	return ""
 }
 
-func (x *UserReceiveAddressEditReq) GetIsDefault() uint32 {
+func (x *UserReceiveAddressEditReq) GetIsDefault() int32 {
 	if x != nil {
 		return x.IsDefault
 	}

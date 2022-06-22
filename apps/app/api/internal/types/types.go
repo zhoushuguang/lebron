@@ -139,13 +139,13 @@ type UserReceiveAddress struct {
 	Uid           uint64 `json:"uid"`            //用户id
 	Name          string `json:"name"`           //收货人名称
 	Phone         string `json:"phone"`          //手机号
-	IsDefault     uint8  `json:"is_default"`     //是否为默认地址
+	IsDefault     int32  `json:"is_default"`     //是否为默认地址
 	PostCode      string `json:"post_code"`      //邮政编码
 	Province      string `json:"province"`       //省份/直辖市
 	City          string `json:"city"`           //城市
 	Region        string `json:"region"`         //区
 	DetailAddress string `json:"detail_address"` //详细地址(街道)
-	IsDelete      uint8  `json:"is_delete"`      //是否删除
+	IsDelete      int32  `json:"is_delete"`      //是否删除
 	CreateTime    int64  `json:"create_time"`    //数据创建时间[禁止在代码中赋值]
 	UpdateTime    int64  `json:"update_time"`    //数据更新时间[禁止在代码中赋值]
 }
@@ -160,7 +160,7 @@ type UserReceiveAddressListRes struct {
 type UserReceiveAddressAddReq struct {
 	Name          string `json:"name"`           //收货人名称
 	Phone         string `json:"phone"`          //手机号
-	IsDefault     uint8  `json:"is_default"`     //是否为默认地址
+	IsDefault     int32  `json:"is_default"`     //是否为默认地址
 	PostCode      string `json:"post_code"`      //邮政编码
 	Province      string `json:"province"`       //省份/直辖市
 	City          string `json:"city"`           //城市
@@ -175,7 +175,7 @@ type UserReceiveAddressEditReq struct {
 	Id            int64  `json:"id"`
 	Name          string `json:"name"`           //收货人名称
 	Phone         string `json:"phone"`          //手机号
-	IsDefault     uint8  `json:"is_default"`     //是否为默认地址
+	IsDefault     int32  `json:"is_default"`     //是否为默认地址
 	PostCode      string `json:"post_code"`      //邮政编码
 	Province      string `json:"province"`       //省份/直辖市
 	City          string `json:"city"`           //城市

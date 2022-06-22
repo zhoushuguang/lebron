@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
 	"github.com/zhoushuguang/lebron/pkg/jwtx"
 
@@ -33,7 +34,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 		Password: req.Password,
 	})
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(err, "req: %+v", req)
 	}
 
 	//generate token

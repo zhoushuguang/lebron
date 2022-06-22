@@ -199,15 +199,15 @@ service api-api {
 	
 	@doc "add user receiveAddress"
 	@handler addReceiveAddress
-	get /addReceiveAddress (UserReceiveAddressAddReq) returns (UserReceiveAddressAddRes)
+	post /addReceiveAddress (UserReceiveAddressAddReq) returns (UserReceiveAddressAddRes)
 	
-	@doc "edit user receiveAddress list"
+	@doc "edit user receiveAddress"
 	@handler editReceiveAddress
-	get /editReceiveAddress (UserReceiveAddressEditReq) returns (UserReceiveAddressEditRes)
+	post /editReceiveAddress (UserReceiveAddressEditReq) returns (UserReceiveAddressEditRes)
 	
 	@doc "del user receiveAddress list"
 	@handler delReceiveAddress
-	get /delReceiveAddress (UserReceiveAddressDelReq) returns (UserReceiveAddressDelRes)
+	post /delReceiveAddress (UserReceiveAddressDelReq) returns (UserReceiveAddressDelRes)
 	
 	@doc "get user receiveAddress list"
 	@handler userReceiveAddressList
