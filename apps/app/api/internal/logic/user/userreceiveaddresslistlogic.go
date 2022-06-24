@@ -2,9 +2,14 @@ package user
 
 import (
 	"context"
+	"encoding/json"
 
+	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/types"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
+	"github.com/zhoushuguang/lebron/pkg/xerr"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +29,20 @@ func NewUserReceiveAddressListLogic(ctx context.Context, svcCtx *svc.ServiceCont
 }
 
 func (l *UserReceiveAddressListLogic) UserReceiveAddressList(req *types.UserReceiveAddressListReq) (resp *types.UserReceiveAddressListRes, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	var addressListReq user.UserReceiveAddressListReq
+	uid, _ := l.ctx.Value("uid").(json.Number).Int64()
+	addressListReq.Uid = int32(uid)
+	rpcRes, err := l.svcCtx.UserRPC.GetUserReceiveAddressList(l.ctx, &addressListReq)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrMsg("Error! Function UserReceiveAddressList"), "Failed to get user addrerss  list err : %v ,req:%+v", err, req)
+	}
+	var addressList []types.UserReceiveAddress
+	if len(rpcRes.List) > 0 {
+		for _, rpcAddress := range rpcRes.List {
+			var addressVo types.UserReceiveAddress
+			_ = copier.Copy(&addressVo, rpcAddress)
+			addressList = append(addressList, addressVo)
+		}
+	}
+	return &types.UserReceiveAddressListRes{List: addressList}, nil
 }
