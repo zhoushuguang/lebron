@@ -15,6 +15,7 @@ type (
 		Product(ctx context.Context, in *ProductItemRequest, opts ...grpc.CallOption) (*ProductItem, error)
 		Products(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*ProductResponse, error)
 		ProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductListResponse, error)
+		OperationProducts(ctx context.Context, in *OperationProductsRequest, opts ...grpc.CallOption) (*OperationProductsResponse, error)
 	}
 
 	defaultProduct struct {
@@ -41,4 +42,9 @@ func (m *defaultProduct) Products(ctx context.Context, in *ProductRequest, opts 
 func (m *defaultProduct) ProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductListResponse, error) {
 	client := NewProductClient(m.cli.Conn())
 	return client.ProductList(ctx, in, opts...)
+}
+
+func (m *defaultProduct) OperationProducts(ctx context.Context, in *OperationProductsRequest, opts ...grpc.CallOption) (*OperationProductsResponse, error) {
+	client := NewProductClient(m.cli.Conn())
+	return client.OperationProducts(ctx, in, opts...)
 }
