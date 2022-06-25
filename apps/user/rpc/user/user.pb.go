@@ -494,7 +494,7 @@ type UserReceiveAddressListReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Uid int32 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	Uid int64 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
 }
 
 func (x *UserReceiveAddressListReq) Reset() {
@@ -529,7 +529,7 @@ func (*UserReceiveAddressListReq) Descriptor() ([]byte, []int) {
 	return file_rpc_user_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *UserReceiveAddressListReq) GetUid() int32 {
+func (x *UserReceiveAddressListReq) GetUid() int64 {
 	if x != nil {
 		return x.Uid
 	}
@@ -542,7 +542,7 @@ type UserReceiveAddress struct {
 	unknownFields protoimpl.UnknownFields
 
 	Id            int32  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Uid           int32  `protobuf:"varint,2,opt,name=uid,proto3" json:"uid,omitempty"`                     //uid
+	Uid           int64  `protobuf:"varint,2,opt,name=uid,proto3" json:"uid,omitempty"`                     //uid
 	Name          string `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`                    //收货人名称
 	Phone         string `protobuf:"bytes,4,opt,name=Phone,proto3" json:"Phone,omitempty"`                  //手机号
 	IsDefault     int32  `protobuf:"varint,5,opt,name=IsDefault,proto3" json:"IsDefault,omitempty"`         //是否为默认地址
@@ -595,7 +595,7 @@ func (x *UserReceiveAddress) GetId() int32 {
 	return 0
 }
 
-func (x *UserReceiveAddress) GetUid() int32 {
+func (x *UserReceiveAddress) GetUid() int64 {
 	if x != nil {
 		return x.Uid
 	}
