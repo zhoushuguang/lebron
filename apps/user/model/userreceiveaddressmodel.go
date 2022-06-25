@@ -10,7 +10,6 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	publicConstant "github.com/zhoushuguang/lebron/pkg/constant"
 )
 
 var _ UserReceiveAddressModel = (*customUserReceiveAddressModel)(nil)
@@ -25,10 +24,8 @@ type (
 	UserReceiveAddressModel interface {
 		userReceiveAddressModel
 		UpdateIsDelete(ctx context.Context, data *UserReceiveAddress) error
-		FindAll(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*UserReceiveAddress, error)
+		FindAll(ctx context.Context, uid int64 ) ([]*UserReceiveAddress, error)
 		RowBuilder() squirrel.SelectBuilder
-		CountBuilder(field string) squirrel.SelectBuilder
-		SumBuilder(field string) squirrel.SelectBuilder
 	}
 
 	customUserReceiveAddressModel struct {
@@ -36,10 +33,9 @@ type (
 	}
 )
 
-func (m customUserReceiveAddressModel) FindAll(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*UserReceiveAddress, error) {
-	rowBuilder = rowBuilder.OrderBy("id DESC")
-
-	query, values, err := rowBuilder.Where("is_delete = ?", publicConstant.IsDelNo).ToSql()
+func (m customUserReceiveAddressModel) FindAll(ctx context.Context, uid int64 ) ([]*UserReceiveAddress, error) {
+	var rowBuilder squirrel.SelectBuilder
+	query, values, err := rowBuilder.Where(squirrel.Eq{"uid": uid}).Where("is_delete = 0").OrderBy("id DESC").ToSql()
 	if err != nil {
 		return nil, err
 	}
@@ -74,10 +70,4 @@ func (m *customUserReceiveAddressModel) RowBuilder() squirrel.SelectBuilder {
 	return squirrel.Select(homestayOrderRows).From(m.table)
 }
 
-func (m *customUserReceiveAddressModel) CountBuilder(field string) squirrel.SelectBuilder {
-	return squirrel.Select("COUNT(" + field + ")").From(m.table)
-}
 
-func (m *customUserReceiveAddressModel) SumBuilder(field string) squirrel.SelectBuilder {
-	return squirrel.Select("IFNULL(SUM(" + field + "),0)").From(m.table)
-}

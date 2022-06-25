@@ -63,8 +63,8 @@ message UserReceiveAddressListReq {
 
 
 message    UserReceiveAddress {
-  int32 id = 1;
-  int32  uid = 2;   //uid
+  int64 id = 1;
+  int64  uid = 2;   //uid
   string Name = 3;     //收货人名称
   string Phone = 4;       //手机号
   int32  IsDefault = 5;   //是否为默认地址
