@@ -120,10 +120,10 @@ services:
 #      - TZ=${TZ}
 #    entrypoint:
 #      - "/app/dtm/dtm"
-#      - "-c=/app/dtm/configs/config.yaml"
+#      - "-c=/app/dtm/configs/etc.yaml"
 #    privileged: true
 #    volumes:
-#      - ./dtm/config.yml:/app/dtm/configs/config.yaml # 将 dtm 配置文件挂载到容器里
+#      - ./dtm/etc.yml:/app/dtm/configs/etc.yaml # 将 dtm 配置文件挂载到容器里
 #    ports:
 #      - "36789:36789"  # DTM HTTP 协议端口号
 #      - "36790:36790"  # DTM gRPC 协议端口号

@@ -7,6 +7,8 @@ service Product {
   rpc Product(ProductItemRequest) returns (ProductItem) ;
   rpc Products(ProductRequest) returns(ProductResponse);
   rpc ProductList(ProductListRequest) returns(ProductListResponse);
+  rpc OperationProducts(OperationProductsRequest) returns (OperationProductsResponse);
+  rpc UpdateProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
 }
 
 message ProductItemRequest {
@@ -35,10 +37,26 @@ message ProductListResponse {
   repeated ProductItem products = 4;
 }
 
+message OperationProductsRequest {
+}
+
+message OperationProductsResponse {
+  repeated ProductItem products = 1;
+}
+
 message ProductItem {
   int64 product_id = 1;
   string name = 2;
   string description = 3;
   string image_url = 4;
   int64 create_time = 5;
+  int64 stock  = 6;
+}
+
+message UpdateProductStockRequest {
+  int64 product_id = 1;
+  int64 num = 2;
+}
+
+message UpdateProductStockResponse {
 }

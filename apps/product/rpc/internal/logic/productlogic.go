@@ -36,5 +36,6 @@ func (l *ProductLogic) Product(in *product.ProductItemRequest) (*product.Product
 	return &product.ProductItem{
 		ProductId: p.Id,
 		Name:      p.Name,
+		Stock:     p.Stock,
 	}, nil
 }
