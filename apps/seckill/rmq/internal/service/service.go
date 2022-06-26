@@ -3,12 +3,12 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"github.com/zeromicro/go-zero/core/logx"
 
 	"github.com/zhoushuguang/lebron/apps/order/rpc/order"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/product"
 	"github.com/zhoushuguang/lebron/apps/seckill/rmq/internal/config"
 
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/zrpc"
 )
 
