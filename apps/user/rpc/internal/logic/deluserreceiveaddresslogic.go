@@ -5,8 +5,8 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zhoushuguang/lebron/apps/user/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
 	"github.com/zhoushuguang/lebron/pkg/xerr"
 )
@@ -27,7 +27,7 @@ func NewDelUserReceiveAddressLogic(ctx context.Context, svcCtx *svc.ServiceConte
 
 // DelUserReceiveAddress 删除收获地址
 func (l *DelUserReceiveAddressLogic) DelUserReceiveAddress(in *user.UserReceiveAddressDelReq) (*user.UserReceiveAddressDelRes, error) {
-	_, err := l.svcCtx.UserReceiveAddressModel.FindOne(l.ctx,in.Id)
+	_, err := l.svcCtx.UserReceiveAddressModel.FindOne(l.ctx, in.Id)
 	if err != nil {
 		if err == model.ErrNotFound {
 			return nil, errors.Wrap(xerr.NewErrMsg("数据不存在"), "收获地址不存在")

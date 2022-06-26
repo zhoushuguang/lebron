@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/jinzhu/copier"
-	"github.com/zhoushuguang/lebron/apps/user/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
 	"google.golang.org/grpc/status"
 
