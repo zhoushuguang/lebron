@@ -41,3 +41,8 @@ func (s *ProductServer) OperationProducts(ctx context.Context, in *product.Opera
 	l := logic.NewOperationProductsLogic(ctx, s.svcCtx)
 	return l.OperationProducts(in)
 }
+
+func (s *ProductServer) UpdateProductStock(ctx context.Context, in *product.UpdateProductStockRequest) (*product.UpdateProductStockResponse, error) {
+	l := logic.NewUpdateProductStockLogic(ctx, s.svcCtx)
+	return l.UpdateProductStock(in)
+}
