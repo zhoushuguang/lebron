@@ -31,7 +31,10 @@ func (l *AddReceiveAddressLogic) AddReceiveAddress(req *types.UserReceiveAddress
 	uid, _ := l.ctx.Value("uid").(json.Number).Int64()
 	var addRpcReq user.UserReceiveAddressAddReq
 	addRpcReq.Uid = int32(uid)
-	copier.Copy(&addRpcReq, req)
+	errCopy := copier.Copy(&addRpcReq, req)
+	if errCopy != nil {
+		return nil, errCopy
+	}
 	_, err = l.svcCtx.UserRPC.AddUserReceiveAddress(l.ctx, &addRpcReq)
 	if err != nil {
 		return nil, err
