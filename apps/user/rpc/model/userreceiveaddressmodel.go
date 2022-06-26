@@ -9,6 +9,7 @@ import (
 	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
+	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
@@ -24,7 +25,7 @@ type (
 	UserReceiveAddressModel interface {
 		userReceiveAddressModel
 		UpdateIsDelete(ctx context.Context, data *UserReceiveAddress) error
-		FindAll(ctx context.Context, uid int64 ) ([]*UserReceiveAddress, error)
+		FindAllByUid(ctx context.Context, uid int64) ([]*UserReceiveAddress, error)
 		RowBuilder() squirrel.SelectBuilder
 	}
 
@@ -33,18 +34,15 @@ type (
 	}
 )
 
-func (m customUserReceiveAddressModel) FindAll(ctx context.Context, uid int64 ) ([]*UserReceiveAddress, error) {
-	var rowBuilder squirrel.SelectBuilder
-	query, values, err := rowBuilder.Where(squirrel.Eq{"uid": uid}).Where("is_delete = 0").OrderBy("id DESC").ToSql()
-	if err != nil {
-		return nil, err
-	}
-
+func (m customUserReceiveAddressModel) FindAllByUid(ctx context.Context, uid int64) ([]*UserReceiveAddress, error) {
 	var resp []*UserReceiveAddress
-	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
+	query := fmt.Sprintf("select %s from %s where `uid` = ? and is_delete = 0", userReceiveAddressRows, m.table)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, uid)
 	switch err {
 	case nil:
 		return resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
 	default:
 		return nil, err
 	}
@@ -69,5 +67,3 @@ func NewUserReceiveAddressModel(conn sqlx.SqlConn, c cache.CacheConf) UserReceiv
 func (m *customUserReceiveAddressModel) RowBuilder() squirrel.SelectBuilder {
 	return squirrel.Select(homestayOrderRows).From(m.table)
 }
-
-

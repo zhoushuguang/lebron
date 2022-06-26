@@ -29,7 +29,7 @@ func NewGetUserReceiveAddressListLogic(ctx context.Context, svcCtx *svc.ServiceC
 
 // GetUserReceiveAddressList 获取收获地址列表
 func (l *GetUserReceiveAddressListLogic) GetUserReceiveAddressList(in *user.UserReceiveAddressListReq) (*user.UserReceiveAddressListRes, error) {
-	receiveAddressesList, err := l.svcCtx.UserReceiveAddressModel.FindAll(l.ctx, in.Uid)
+	receiveAddressesList, err := l.svcCtx.UserReceiveAddressModel.FindAllByUid(l.ctx, in.Uid)
 	if err != nil && err != model.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DbError), "Failed  get user's receive address list err : %v , in :%+v", err, in)
 	}

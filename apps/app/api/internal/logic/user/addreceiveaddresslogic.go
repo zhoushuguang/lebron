@@ -30,7 +30,7 @@ func (l *AddReceiveAddressLogic) AddReceiveAddress(req *types.UserReceiveAddress
 	//get jwt token uid
 	uid, _ := l.ctx.Value("uid").(json.Number).Int64()
 	var addRpcReq user.UserReceiveAddressAddReq
-	addRpcReq.Uid = int32(uid)
+	addRpcReq.Uid = uid
 	errCopy := copier.Copy(&addRpcReq, req)
 	if errCopy != nil {
 		return nil, errCopy
