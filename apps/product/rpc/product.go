@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/config"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/server"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/svc"
@@ -20,7 +21,8 @@ var configFile = flag.String("f", "etc/product.yaml", "the etc file")
 
 func main() {
 	flag.Parse()
-
+	//close statis log
+	logx.DisableStat()
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)

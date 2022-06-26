@@ -42,7 +42,7 @@ message UserInfoResponse {
 
 // 添加用户收货地址
 message    UserReceiveAddressAddReq {
-  int32  uid = 1;   //uid
+  int64  uid = 1;   //uid
   string Name = 2;     //收货人名称
   string Phone = 3;       //手机号
   int32  IsDefault = 4;   //是否为默认地址
@@ -58,7 +58,7 @@ message   UserReceiveAddressAddRes {
 // 添加用户收货地址
 //获取收获地址列表
 message UserReceiveAddressListReq {
-  int32 uid = 1;
+  int64 uid = 1;
 }
 
 
