@@ -6,6 +6,7 @@ option go_package="./order";
 
 service Order {
   rpc Orders(OrdersRequest) returns(OrdersResponse);
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
 }
 
 message OrdersRequest {
@@ -28,4 +29,12 @@ message OrderItem {
   int64 product_id = 4;
   int64 user_id = 5;
   int64 create_time = 6;
+}
+
+message CreateOrderRequest {
+  int64 uid = 1;
+  int64 pid = 2;
+}
+
+message CreateOrderResponse {
 }
