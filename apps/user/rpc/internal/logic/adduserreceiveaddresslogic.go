@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/pkg/errors"
-	"github.com/zhoushuguang/lebron/apps/user/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/internal/svc"
+	"github.com/zhoushuguang/lebron/apps/user/rpc/model"
 	"github.com/zhoushuguang/lebron/apps/user/rpc/user"
 	"github.com/zhoushuguang/lebron/pkg/xerr"
 

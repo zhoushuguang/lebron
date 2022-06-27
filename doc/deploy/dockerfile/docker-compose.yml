@@ -44,8 +44,8 @@ services:
       - ${DATA_PATH_HOST}/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
       - ${DATA_PATH_HOST}/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
 
   etcd: # 自定义容器名称
     image: bitnami/etcd

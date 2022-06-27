@@ -27,7 +27,10 @@ func NewEditReceiveAddressLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 
 func (l *EditReceiveAddressLogic) EditReceiveAddress(req *types.UserReceiveAddressEditReq) (resp *types.UserReceiveAddressEditRes, err error) {
 	var editRpcReq user.UserReceiveAddressEditReq
-	copier.Copy(&editRpcReq, req)
+	errCopy := copier.Copy(&editRpcReq, req)
+	if errCopy != nil {
+		return nil, errCopy
+	}
 	_, err = l.svcCtx.UserRPC.EditUserReceiveAddress(l.ctx, &editRpcReq)
 	if err != nil {
 		return nil, err

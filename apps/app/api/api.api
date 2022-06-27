@@ -1,8 +1,8 @@
 syntax = "v1"
 
 import (
-	"desc/userReceiveAddress.api"
-	"desc/user.api"
+	"apis/userReceiveAddress.api"
+	"apis/user.api"
 )
 
 type (

@@ -136,7 +136,7 @@ type ProductDetailResponse struct {
 
 type UserReceiveAddress struct {
 	Id            int64  `json:"id"`
-	Uid           uint64 `json:"uid"`            //用户id
+	Uid           int64 `json:"uid"`            //用户id
 	Name          string `json:"name"`           //收货人名称
 	Phone         string `json:"phone"`          //手机号
 	IsDefault     int32  `json:"is_default"`     //是否为默认地址
