@@ -12,6 +12,7 @@ type ServiceContext struct {
 	UserModel model.UserModel
 	//add dependency on user model
 	UserReceiveAddressModel model.UserReceiveAddressModel
+	UserCollectionModel     model.UserCollectionModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -20,5 +21,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config:                  c,
 		UserModel:               model.NewUserModel(sqlConn, c.CacheRedis),
 		UserReceiveAddressModel: model.NewUserReceiveAddressModel(sqlConn, c.CacheRedis),
+		UserCollectionModel:     model.NewUserCollectionModel(sqlConn, c.CacheRedis),
 	}
 }
