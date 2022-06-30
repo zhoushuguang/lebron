@@ -94,6 +94,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/getReceiveAddressList",
 				Handler: user.UserReceiveAddressListHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/addCollection",
+				Handler: user.UserCollectionAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delCollection",
+				Handler: user.UserCollectionDelHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/getCollectionList",
+				Handler: user.UserCollectionListHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/v1/user"),

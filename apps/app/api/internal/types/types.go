@@ -136,7 +136,7 @@ type ProductDetailResponse struct {
 
 type UserReceiveAddress struct {
 	Id            int64  `json:"id"`
-	Uid           int64 `json:"uid"`            //用户id
+	Uid           uint64 `json:"uid"`            //用户id
 	Name          string `json:"name"`           //收货人名称
 	Phone         string `json:"phone"`          //手机号
 	IsDefault     int32  `json:"is_default"`     //是否为默认地址
@@ -219,4 +219,25 @@ type UserInfoReq struct {
 
 type UserInfoResp struct {
 	UserInfo UserInfo `json:"userInfo"`
+}
+
+type UserCollectionAddReq struct {
+	ProductId int64 `json:"product_id"` // 商品id
+}
+
+type UserCollectionAddRes struct {
+}
+
+type UserCollectionDelReq struct {
+	Id int64 `json:"id"` // 收藏Id
+}
+
+type UserCollectionDelRes struct {
+}
+
+type UserCollectionListReq struct {
+}
+
+type UserCollectionListRes struct {
+	ProductId []int64 `json:"product_id"` // 商品id
 }
