@@ -29,10 +29,10 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	res, err := l.svcCtx.UserRPC.Login(l.ctx, &user.LoginRequest{
-		Username: req.Username,
-		Password: req.Password,
-	})
+	var loginReq user.LoginRequest
+	loginReq.Username = req.Username
+	loginReq.Password = req.Password
+	res, err := l.svcCtx.UserRPC.Login(l.ctx, &loginReq)
 	if err != nil {
 		return nil, errors.Wrapf(err, "req: %+v", req)
 	}

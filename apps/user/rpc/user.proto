@@ -110,6 +110,13 @@ message UserReceiveAddressDelRes {
 //删除收获地址
 
 
+//根据主键id,查询收获地址
+message    UserReceiveAddressInfoReq {
+  int64 Id = 1;
+}
+//根据主键id,查询收获地址
+
+
 service User {
   //登录
   rpc Login(LoginRequest) returns(LoginResponse);
@@ -123,5 +130,9 @@ service User {
   rpc delUserReceiveAddress(UserReceiveAddressDelReq) returns(UserReceiveAddressDelRes);
   //获取收获地址列表
   rpc getUserReceiveAddressList(UserReceiveAddressListReq) returns(UserReceiveAddressListRes);
+  //根据主键id,查询收获地址
+  rpc getUserReceiveAddressInfo(UserReceiveAddressInfoReq) returns(UserReceiveAddress);
+
+
 }
 

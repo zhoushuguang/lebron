@@ -57,3 +57,9 @@ func (s *UserServer) GetUserReceiveAddressList(ctx context.Context, in *user.Use
 	l := logic.NewGetUserReceiveAddressListLogic(ctx, s.svcCtx)
 	return l.GetUserReceiveAddressList(in)
 }
+
+// 根据主键id,查询收获地址
+func (s *UserServer) GetUserReceiveAddressInfo(ctx context.Context, in *user.UserReceiveAddressInfoReq) (*user.UserReceiveAddress, error) {
+	l := logic.NewGetUserReceiveAddressInfoLogic(ctx, s.svcCtx)
+	return l.GetUserReceiveAddressInfo(in)
+}

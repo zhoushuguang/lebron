@@ -36,7 +36,7 @@ func (l *DelUserReceiveAddressLogic) DelUserReceiveAddress(in *user.UserReceiveA
 	}
 
 	dbAddress := new(model.UserReceiveAddress)
-	dbAddress.Id = in.Id
+	dbAddress.Id = in.GetId()
 	dbAddress.IsDelete = 1
 	err = l.svcCtx.UserReceiveAddressModel.UpdateIsDelete(l.ctx, dbAddress)
 	if err != nil {

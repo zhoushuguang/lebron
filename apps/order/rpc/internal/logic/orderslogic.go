@@ -26,11 +26,12 @@ func NewOrdersLogic(ctx context.Context, svcCtx *svc.ServiceContext) *OrdersLogi
 func (l *OrdersLogic) Orders(in *order.OrdersRequest) (*order.OrdersResponse, error) {
 	uid := int64(123)
 	if in.UserId == uid {
-		orders := []*order.OrderItem{
+		orders := []*order.Orderitem{
 			{
-				OrderId:   "20220609123456",
-				ProductId: 1,
-				Quantity:  1,
+				Orderid:  "20220609123456",
+				Userid:   uid,
+				Proid:    1,
+				Quantity: 1,
 			},
 		}
 		return &order.OrdersResponse{Orders: orders}, nil

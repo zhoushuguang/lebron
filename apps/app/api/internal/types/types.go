@@ -136,7 +136,7 @@ type ProductDetailResponse struct {
 
 type UserReceiveAddress struct {
 	Id            int64  `json:"id"`
-	Uid           int64 `json:"uid"`            //用户id
+	Uid           uint64 `json:"uid"`            //用户id
 	Name          string `json:"name"`           //收货人名称
 	Phone         string `json:"phone"`          //手机号
 	IsDefault     int32  `json:"is_default"`     //是否为默认地址
@@ -219,4 +219,34 @@ type UserInfoReq struct {
 
 type UserInfoResp struct {
 	UserInfo UserInfo `json:"userInfo"`
+}
+
+type Orders struct {
+	Id          string  `json:"id"`          //订单id
+	Userid      uint64  `json:"userid"`      //用户id
+	Shoppingid  int64   `json:"shoppingid"`  //收货信息表id
+	Payment     float64 `json:"payment"`     //实际付款金额,单位是元,保留两位小数
+	Paymenttype int8    `json:"paymenttype"` //支付类型,1-在线支付
+	Postage     int     `json:"postage"`     //运费,单位是元
+	Status      int16   `json:"status"`      //订单状态:0-已取消-10-未付款，20-已付款，30-待发货 40-待收货，50-交易成功，60-交易关闭
+	CreateTime  int64   `json:"create_time"` //创建时间
+	UpdateTime  int64   `json:"update_time"` //更新时间
+}
+
+type OrderAddReq struct {
+	ReceiveAddressId int64 `json:"receiveAddressId"` //用户收货地址表id
+	Postage          int64 `json:"postage"`          //运费,单位是元
+	Productid        int64 `json:"productid"`        //商品id
+	Quantity         int64 `json:"quantity"`         //商品数量
+}
+
+type OrderAddResp struct {
+	Id string `json:"id"` //订单id
+}
+
+type OrderInfoReq struct {
+}
+
+type OrderInfoResp struct {
+	OrderInfo Orders `json:"orderInfo"`
 }

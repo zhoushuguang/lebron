@@ -29,7 +29,7 @@ func NewAddUserReceiveAddressLogic(ctx context.Context, svcCtx *svc.ServiceConte
 // AddUserReceiveAddress 添加收获地址
 func (l *AddUserReceiveAddressLogic) AddUserReceiveAddress(in *user.UserReceiveAddressAddReq) (*user.UserReceiveAddressAddRes, error) {
 	dbAddress := new(model.UserReceiveAddress)
-	dbAddress.Uid = int64(in.GetUid())
+	dbAddress.Uid = in.GetUid()
 	dbAddress.Name = in.GetName()
 	dbAddress.Phone = in.GetPhone()
 	dbAddress.Province = in.GetProvince()

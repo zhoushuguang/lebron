@@ -22,7 +22,7 @@ var (
 	ordersRowsExpectAutoSet   = strings.Join(stringx.Remove(ordersFieldNames, "`create_time`", "`update_time`", "`create_at`", "`update_at`"), ",")
 	ordersRowsWithPlaceHolder = strings.Join(stringx.Remove(ordersFieldNames, "`id`", "`create_time`", "`update_time`", "`create_at`", "`update_at`"), "=?,") + "=?"
 
-	cacheOrdersOrdersIdPrefix = "cache:orders:orders:id:"
+	cacheOrdersIdPrefix = "cache:orders:id:"
 )
 
 type (
@@ -39,19 +39,15 @@ type (
 	}
 
 	Orders struct {
-		Id          string    `db:"id"`           // 订单id
-		Userid      int64     `db:"userid"`       // 用户id
-		Shoppingid  int64     `db:"shoppingid"`   // 收货信息表id
-		Payment     float64   `db:"payment"`      // 实际付款金额,单位是元,保留两位小数
-		Paymenttype int64     `db:"paymenttype"`  // 支付类型,1-在线支付
-		Postage     int64     `db:"postage"`      // 运费,单位是元
-		Status      int64     `db:"status"`       // 订单状态:0-已取消-10-未付款，20-已付款，30-待发货 40-待收货，50-交易成功，60-交易关闭
-		PaymentTime time.Time `db:"payment_time"` // 支付时间
-		SendTime    time.Time `db:"send_time"`    // 发货时间
-		EndTime     time.Time `db:"end_time"`     // 交易完成时间
-		CloseTime   time.Time `db:"close_time"`   // 交易关闭时间
-		CreateTime  time.Time `db:"create_time"`  // 创建时间
-		UpdateTime  time.Time `db:"update_time"`  // 更新时间
+		Id          string    `db:"id"`          // 订单id
+		Userid      int64     `db:"userid"`      // 用户id
+		Shoppingid  int64     `db:"shoppingid"`  // 收货信息表id
+		Payment     float64   `db:"payment"`     // 实际付款金额,单位是元,保留两位小数
+		Paymenttype int64     `db:"paymenttype"` // 支付类型,1-在线支付
+		Postage     int64     `db:"postage"`     // 运费,单位是元
+		Status      int64     `db:"status"`      // 订单状态:0-已取消-10-未付款，20-已付款，30-待发货 40-待收货，50-交易成功，60-交易关闭
+		CreateTime  time.Time `db:"create_time"` // 创建时间
+		UpdateTime  time.Time `db:"update_time"` // 更新时间
 	}
 )
 
@@ -63,18 +59,18 @@ func newOrdersModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultOrdersModel {
 }
 
 func (m *defaultOrdersModel) Delete(ctx context.Context, id string) error {
-	ordersOrdersIdKey := fmt.Sprintf("%s%v", cacheOrdersOrdersIdPrefix, id)
+	ordersIdKey := fmt.Sprintf("%s%v", cacheOrdersIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, id)
-	}, ordersOrdersIdKey)
+	}, ordersIdKey)
 	return err
 }
 
 func (m *defaultOrdersModel) FindOne(ctx context.Context, id string) (*Orders, error) {
-	ordersOrdersIdKey := fmt.Sprintf("%s%v", cacheOrdersOrdersIdPrefix, id)
+	ordersIdKey := fmt.Sprintf("%s%v", cacheOrdersIdPrefix, id)
 	var resp Orders
-	err := m.QueryRowCtx(ctx, &resp, ordersOrdersIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
+	err := m.QueryRowCtx(ctx, &resp, ordersIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", ordersRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id)
 	})
@@ -89,25 +85,25 @@ func (m *defaultOrdersModel) FindOne(ctx context.Context, id string) (*Orders, e
 }
 
 func (m *defaultOrdersModel) Insert(ctx context.Context, data *Orders) (sql.Result, error) {
-	ordersOrdersIdKey := fmt.Sprintf("%s%v", cacheOrdersOrdersIdPrefix, data.Id)
+	ordersIdKey := fmt.Sprintf("%s%v", cacheOrdersIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, ordersRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Id, data.Userid, data.Shoppingid, data.Payment, data.Paymenttype, data.Postage, data.Status, data.PaymentTime, data.SendTime, data.EndTime, data.CloseTime)
-	}, ordersOrdersIdKey)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?)", m.table, ordersRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.Id, data.Userid, data.Shoppingid, data.Payment, data.Paymenttype, data.Postage, data.Status)
+	}, ordersIdKey)
 	return ret, err
 }
 
 func (m *defaultOrdersModel) Update(ctx context.Context, data *Orders) error {
-	ordersOrdersIdKey := fmt.Sprintf("%s%v", cacheOrdersOrdersIdPrefix, data.Id)
+	ordersIdKey := fmt.Sprintf("%s%v", cacheOrdersIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, ordersRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.Userid, data.Shoppingid, data.Payment, data.Paymenttype, data.Postage, data.Status, data.PaymentTime, data.SendTime, data.EndTime, data.CloseTime, data.Id)
-	}, ordersOrdersIdKey)
+		return conn.ExecCtx(ctx, query, data.Userid, data.Shoppingid, data.Payment, data.Paymenttype, data.Postage, data.Status, data.Id)
+	}, ordersIdKey)
 	return err
 }
 
 func (m *defaultOrdersModel) formatPrimary(primary interface{}) string {
-	return fmt.Sprintf("%s%v", cacheOrdersOrdersIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheOrdersIdPrefix, primary)
 }
 
 func (m *defaultOrdersModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary interface{}) error {

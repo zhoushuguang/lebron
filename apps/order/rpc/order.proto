@@ -1,12 +1,14 @@
 syntax = "proto3";
 
 package order;
-option go_package="./order";
+option go_package = "./order";
 
 
 service Order {
   rpc Orders(OrdersRequest) returns(OrdersResponse);
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc CreateOrderDTM(AddOrderReq) returns (AddOrderResp);
+  rpc GetOrderById(GetOrderByIdReq) returns (GetOrderByIdResp);
 }
 
 message OrdersRequest {
@@ -17,18 +19,24 @@ message OrdersRequest {
 }
 
 message OrdersResponse {
-  repeated OrderItem orders = 1;
+  repeated Orderitem orders = 1;
   bool is_end = 2;
   string create_time = 3;
 }
 
-message OrderItem {
-  string order_id = 1;
-  int64 quantity = 2;
-  float payment = 3;
-  int64 product_id = 4;
-  int64 user_id = 5;
-  int64 create_time = 6;
+//--------------------------------订单明细表--------------------------------
+message Orderitem {
+  int64 id = 1; //订单子表id
+  string orderid = 2; //订单id
+  int64 userid = 3; //用户id
+  int64 proid = 4; //商品id
+  string proname = 5; //商品名称
+  string proimage = 6; //商品图片地址
+  double currentunitprice = 7; //生成订单时的商品单价，单位是元,保留两位小数
+  int64 quantity = 8; //商品数量
+  double totalprice = 9; //商品总价,单位是元,保留两位小数
+  int64 createTime = 10; //创建时间
+  int64 updateTime = 11; //更新时间
 }
 
 message CreateOrderRequest {
@@ -37,4 +45,43 @@ message CreateOrderRequest {
 }
 
 message CreateOrderResponse {
+}
+
+
+
+// ------------------------------------
+// Messages
+// ------------------------------------
+
+//--------------------------------订单表--------------------------------
+message Orders {
+  string id = 1; //订单id
+  int64 userid = 2; //用户id
+  int64 shoppingid = 3; //收货信息表id
+  double payment = 4; //实际付款金额,单位是元,保留两位小数
+  int64 paymenttype = 5; //支付类型,1-在线支付
+  int64 postage = 6; //运费,单位是元
+  int64 status = 7; //订单状态:0-已取消-10-未付款，20-已付款，30-待发货 40-待收货，50-交易成功，60-交易关闭
+  int64 createTime = 8; //创建时间
+  int64 updateTime = 9; //更新时间
+}
+
+message AddOrderReq {
+  int64 userid = 1; //用户id
+  int64 productid = 2;//商品id
+  int64 quantity = 3;//商品数量
+  int64 postage = 4; //运费,单位是元
+  int64 receiveAddressId = 5;//用户收货地址表,主键id
+}
+
+message AddOrderResp {
+  string id = 1;
+}
+
+message GetOrderByIdReq {
+  int64 id = 1; //id
+}
+
+message GetOrderByIdResp {
+  Orders order = 1; //order
 }

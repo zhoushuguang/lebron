@@ -31,3 +31,13 @@ func (s *OrderServer) CreateOrder(ctx context.Context, in *order.CreateOrderRequ
 	l := logic.NewCreateOrderLogic(ctx, s.svcCtx)
 	return l.CreateOrder(in)
 }
+
+func (s *OrderServer) CreateOrderDTM(ctx context.Context, in *order.AddOrderReq) (*order.AddOrderResp, error) {
+	l := logic.NewCreateOrderDTMLogic(ctx, s.svcCtx)
+	return l.CreateOrderDTM(in)
+}
+
+func (s *OrderServer) GetOrderById(ctx context.Context, in *order.GetOrderByIdReq) (*order.GetOrderByIdResp, error) {
+	l := logic.NewGetOrderByIdLogic(ctx, s.svcCtx)
+	return l.GetOrderById(in)
+}

@@ -14,6 +14,8 @@ type (
 	Order interface {
 		Orders(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*OrdersResponse, error)
 		CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
+		CreateOrderDTM(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error)
+		GetOrderById(ctx context.Context, in *GetOrderByIdReq, opts ...grpc.CallOption) (*GetOrderByIdResp, error)
 	}
 
 	defaultOrder struct {
@@ -35,4 +37,14 @@ func (m *defaultOrder) Orders(ctx context.Context, in *OrdersRequest, opts ...gr
 func (m *defaultOrder) CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error) {
 	client := NewOrderClient(m.cli.Conn())
 	return client.CreateOrder(ctx, in, opts...)
+}
+
+func (m *defaultOrder) CreateOrderDTM(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error) {
+	client := NewOrderClient(m.cli.Conn())
+	return client.CreateOrderDTM(ctx, in, opts...)
+}
+
+func (m *defaultOrder) GetOrderById(ctx context.Context, in *GetOrderByIdReq, opts ...grpc.CallOption) (*GetOrderByIdResp, error) {
+	client := NewOrderClient(m.cli.Conn())
+	return client.GetOrderById(ctx, in, opts...)
 }
