@@ -3,13 +3,13 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"github.com/zhoushuguang/lebron/pkg/batcher"
 	"strconv"
 	"time"
 
 	"github.com/zhoushuguang/lebron/apps/product/rpc/product"
 	"github.com/zhoushuguang/lebron/apps/seckill/rpc/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/seckill/rpc/seckill"
+	"github.com/zhoushuguang/lebron/pkg/batcher"
 
 	"github.com/zeromicro/go-zero/core/collection"
 	"github.com/zeromicro/go-zero/core/limit"

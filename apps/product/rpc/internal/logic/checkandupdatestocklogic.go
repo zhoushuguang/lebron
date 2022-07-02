@@ -3,13 +3,13 @@ package logic
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/product"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type CheckAndUpdateStockLogic struct {
