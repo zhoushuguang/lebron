@@ -109,13 +109,35 @@ message UserReceiveAddressDelRes {
 }
 //删除收获地址
 
+// 添加收藏
+message UserCollectionAddReq {
+  int64   Uid = 1;              // 用户id
+  int64   ProductId = 2;        // 商品id
+}
+message UserCollectionAddRes {}
+// 添加收藏
+
+// 删除收藏
+message UserCollectionDelReq {
+  int64   Id = 1;               // 收藏Id
+}
+message UserCollectionDelRes {}
+// 删除收藏
+
+// 收藏列表
+message UserCollectionListReq {
+  int64   Uid = 1;              // 用户id
+}
+message UserCollectionListRes {
+  repeated int64 ProductId = 1; // 商品id
+}
+// 收藏列表
 
 //根据主键id,查询收获地址
 message    UserReceiveAddressInfoReq {
   int64 Id = 1;
 }
 //根据主键id,查询收获地址
-
 
 service User {
   //登录
@@ -130,6 +152,13 @@ service User {
   rpc delUserReceiveAddress(UserReceiveAddressDelReq) returns(UserReceiveAddressDelRes);
   //获取收获地址列表
   rpc getUserReceiveAddressList(UserReceiveAddressListReq) returns(UserReceiveAddressListRes);
+
+  // 添加收藏
+  rpc addUserCollection(UserCollectionAddReq) returns(UserCollectionAddRes);
+  // 删除收藏
+  rpc delUserCollection(UserCollectionDelReq) returns(UserCollectionDelRes);
+  // 收藏列表
+  rpc getUserCollectionList(UserCollectionListReq) returns(UserCollectionListRes);
   //根据主键id,查询收获地址
   rpc getUserReceiveAddressInfo(UserReceiveAddressInfoReq) returns(UserReceiveAddress);
 

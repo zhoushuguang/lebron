@@ -3,6 +3,7 @@ syntax = "v1"
 import (
 	"apis/userReceiveAddress.api"
 	"apis/user.api"
+	"apis/usercollection.api"
 	"apis/order.api"
 )
 
@@ -213,6 +214,21 @@ service api-api {
 	@doc "get user receiveAddress list"
 	@handler userReceiveAddressList
 	get /getReceiveAddressList (UserReceiveAddressListReq) returns (UserReceiveAddressListRes)
+	
+	@doc "add user collection"
+	@handler userCollectionAdd
+	post /addCollection (UserCollectionAddReq) returns (UserCollectionAddRes)
+	
+	@doc "del user collection"
+	@handler userCollectionDel
+	post /delCollection (UserCollectionDelReq) returns (UserCollectionDelRes)
+	
+	@doc "get user collection list"
+	@handler userCollectionList
+	get /getCollectionList (UserCollectionListReq) returns (UserCollectionListRes)
+}
+
+
 }
 
 //========================> order v1 <===================================

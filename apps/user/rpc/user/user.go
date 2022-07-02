@@ -24,6 +24,12 @@ type (
 		DelUserReceiveAddress(ctx context.Context, in *UserReceiveAddressDelReq, opts ...grpc.CallOption) (*UserReceiveAddressDelRes, error)
 		// 获取收获地址列表
 		GetUserReceiveAddressList(ctx context.Context, in *UserReceiveAddressListReq, opts ...grpc.CallOption) (*UserReceiveAddressListRes, error)
+		//  添加收藏
+		AddUserCollection(ctx context.Context, in *UserCollectionAddReq, opts ...grpc.CallOption) (*UserCollectionAddRes, error)
+		//  删除收藏
+		DelUserCollection(ctx context.Context, in *UserCollectionDelReq, opts ...grpc.CallOption) (*UserCollectionDelRes, error)
+		//  收藏列表
+		GetUserCollectionList(ctx context.Context, in *UserCollectionListReq, opts ...grpc.CallOption) (*UserCollectionListRes, error)
 		// 根据主键id,查询收获地址
 		GetUserReceiveAddressInfo(ctx context.Context, in *UserReceiveAddressInfoReq, opts ...grpc.CallOption) (*UserReceiveAddress, error)
 	}
@@ -75,6 +81,23 @@ func (m *defaultUser) GetUserReceiveAddressList(ctx context.Context, in *UserRec
 	return client.GetUserReceiveAddressList(ctx, in, opts...)
 }
 
+//  添加收藏
+func (m *defaultUser) AddUserCollection(ctx context.Context, in *UserCollectionAddReq, opts ...grpc.CallOption) (*UserCollectionAddRes, error) {
+	client := NewUserClient(m.cli.Conn())
+	return client.AddUserCollection(ctx, in, opts...)
+}
+
+//  删除收藏
+func (m *defaultUser) DelUserCollection(ctx context.Context, in *UserCollectionDelReq, opts ...grpc.CallOption) (*UserCollectionDelRes, error) {
+	client := NewUserClient(m.cli.Conn())
+	return client.DelUserCollection(ctx, in, opts...)
+}
+
+//  收藏列表
+func (m *defaultUser) GetUserCollectionList(ctx context.Context, in *UserCollectionListReq, opts ...grpc.CallOption) (*UserCollectionListRes, error) {
+	client := NewUserClient(m.cli.Conn())
+	return client.GetUserCollectionList(ctx, in, opts...)
+}
 // 根据主键id,查询收获地址
 func (m *defaultUser) GetUserReceiveAddressInfo(ctx context.Context, in *UserReceiveAddressInfoReq, opts ...grpc.CallOption) (*UserReceiveAddress, error) {
 	client := NewUserClient(m.cli.Conn())

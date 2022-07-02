@@ -221,6 +221,28 @@ type UserInfoResp struct {
 	UserInfo UserInfo `json:"userInfo"`
 }
 
+type UserCollectionAddReq struct {
+	ProductId int64 `json:"product_id"` // 商品id
+}
+
+type UserCollectionAddRes struct {
+}
+
+type UserCollectionDelReq struct {
+	Id int64 `json:"id"` // 收藏Id
+}
+
+type UserCollectionDelRes struct {
+}
+
+type UserCollectionListReq struct {
+}
+
+type UserCollectionListRes struct {
+	ProductId []int64 `json:"product_id"` // 商品id
+}
+
+
 type Orders struct {
 	Id          string  `json:"id"`          //订单id
 	Userid      uint64  `json:"userid"`      //用户id

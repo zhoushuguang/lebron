@@ -1,0 +1,38 @@
+syntax = "v1"
+
+info(
+	title: "用户收藏"
+	desc: "用户收藏"
+	author: "杨浩"
+	email: "go__zero@163.com"
+	version: "v1"
+)
+
+// 添加收藏
+type (
+    UserCollectionAddReq {
+        ProductId  int64    `json:"product_id"`  // 商品id
+    }
+    UserCollectionAddRes {}
+)
+// 添加收藏
+
+// 删除收藏
+type (
+    UserCollectionDelReq {
+        Id         int64    `json:"id"`          // 收藏Id
+    }
+    UserCollectionDelRes {}
+)
+// 删除收藏
+
+// 收藏列表
+type (
+    UserCollectionListReq {}
+    UserCollectionListRes {
+        ProductId  []int64    `json:"product_id"`  // 商品id
+    }
+)
+// 收藏列表
+
+
