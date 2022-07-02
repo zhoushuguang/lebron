@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"encoding/json"
+	"github.com/zhoushuguang/lebron/pkg/batcher"
 	"strconv"
 	"time"
 
@@ -22,6 +23,11 @@ const (
 	limitQuota        = 1
 	seckillUserPrefix = "seckill#u#"
 	localCacheExpire  = time.Second * 60
+
+	batcherSize     = 100
+	batcherBuffer   = 100
+	batcherWorker   = 10
+	batcherInterval = time.Second
 )
 
 type SeckillOrderLogic struct {
@@ -29,6 +35,7 @@ type SeckillOrderLogic struct {
 	svcCtx     *svc.ServiceContext
 	limiter    *limit.PeriodLimit
 	localCache *collection.Cache
+	batcher    *batcher.Batcher
 	logx.Logger
 }
 
@@ -42,13 +49,42 @@ func NewSeckillOrderLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Seck
 	if err != nil {
 		panic(err)
 	}
-	return &SeckillOrderLogic{
+	s := &SeckillOrderLogic{
 		ctx:        ctx,
 		svcCtx:     svcCtx,
 		Logger:     logx.WithContext(ctx),
 		localCache: localCache,
 		limiter:    limit.NewPeriodLimit(limitPeriod, limitQuota, svcCtx.BizRedis, seckillUserPrefix),
 	}
+
+	b := batcher.New(
+		batcher.WithSize(batcherSize),
+		batcher.WithBuffer(batcherBuffer),
+		batcher.WithWorker(batcherWorker),
+		batcher.WithInterval(batcherInterval),
+	)
+	b.Sharding = func(key string) int {
+		pid, _ := strconv.ParseInt(key, 10, 64)
+		return int(pid) % batcherWorker
+	}
+	b.Do = func(ctx context.Context, val map[string][]interface{}) {
+		var msgs []*KafkaData
+		for _, vs := range val {
+			for _, v := range vs {
+				msgs = append(msgs, v.(*KafkaData))
+			}
+		}
+		kd, err := json.Marshal(msgs)
+		if err != nil {
+			logx.Errorf("Batcher.Do json.Marshal msgs: %v error: %v", msgs, err)
+		}
+		if err = s.svcCtx.KafkaPusher.Push(string(kd)); err != nil {
+			logx.Errorf("KafkaPusher.Push kd: %s error: %v", string(kd), err)
+		}
+	}
+	s.batcher = b
+	s.batcher.Start()
+	return s
 }
 
 func (l *SeckillOrderLogic) SeckillOrder(in *seckill.SeckillOrderRequest) (*seckill.SeckillOrderResponse, error) {
@@ -63,12 +99,8 @@ func (l *SeckillOrderLogic) SeckillOrder(in *seckill.SeckillOrderRequest) (*seck
 	if p.Stock <= 0 {
 		return nil, status.Errorf(codes.OutOfRange, "Insufficient stock")
 	}
-	kd, err := json.Marshal(&KafkaData{Uid: in.UserId, Pid: in.ProductId})
-	if err != nil {
-		return nil, err
-	}
-	if err := l.svcCtx.KafkaPusher.Push(string(kd)); err != nil {
-		return nil, err
+	if err = l.batcher.Add(strconv.FormatInt(in.ProductId, 10), &KafkaData{Uid: in.UserId, Pid: in.ProductId}); err != nil {
+		logx.Errorf("l.batcher.Add uid: %d pid: %d error: %v", in.UserId, in.ProductId, err)
 	}
 	return &seckill.SeckillOrderResponse{}, nil
 }
