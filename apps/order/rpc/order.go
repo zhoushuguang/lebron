@@ -4,16 +4,14 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/service"
+	"github.com/zeromicro/go-zero/zrpc"
 	"github.com/zhoushuguang/lebron/apps/order/rpc/internal/config"
 	"github.com/zhoushuguang/lebron/apps/order/rpc/internal/server"
 	"github.com/zhoushuguang/lebron/apps/order/rpc/internal/svc"
 	"github.com/zhoushuguang/lebron/apps/order/rpc/order"
-	"github.com/zhoushuguang/lebron/pkg/snowflake"
-
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/service"
-	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -21,9 +19,6 @@ import (
 var configFile = flag.String("f", "etc/order.yaml", "the etc file")
 
 func main() {
-
-	orderId := snowflake.GenIDString()
-	logx.Info(orderId)
 	flag.Parse()
 
 	//close statis log
