@@ -46,3 +46,8 @@ func (s *ProductServer) UpdateProductStock(ctx context.Context, in *product.Upda
 	l := logic.NewUpdateProductStockLogic(ctx, s.svcCtx)
 	return l.UpdateProductStock(in)
 }
+
+func (s *ProductServer) CheckAndUpdateStock(ctx context.Context, in *product.CheckAndUpdateStockRequest) (*product.CheckAndUpdateStockResponse, error) {
+	l := logic.NewCheckAndUpdateStockLogic(ctx, s.svcCtx)
+	return l.CheckAndUpdateStock(in)
+}

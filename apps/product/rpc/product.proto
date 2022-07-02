@@ -9,6 +9,7 @@ service Product {
   rpc ProductList(ProductListRequest) returns(ProductListResponse);
   rpc OperationProducts(OperationProductsRequest) returns (OperationProductsResponse);
   rpc UpdateProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
+  rpc CheckAndUpdateStock(CheckAndUpdateStockRequest) returns (CheckAndUpdateStockResponse);
 }
 
 message ProductItemRequest {
@@ -59,4 +60,11 @@ message UpdateProductStockRequest {
 }
 
 message UpdateProductStockResponse {
+}
+
+message CheckAndUpdateStockRequest {
+  int64 product_id = 1;
+}
+
+message CheckAndUpdateStockResponse {
 }
