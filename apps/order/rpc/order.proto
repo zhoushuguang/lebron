@@ -7,6 +7,8 @@ option go_package="./order";
 service Order {
   rpc Orders(OrdersRequest) returns(OrdersResponse);
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc CreateOrderCheck(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc RollbackOrder (CreateOrderRequest) returns (CreateOrderResponse);
 }
 
 message OrdersRequest {

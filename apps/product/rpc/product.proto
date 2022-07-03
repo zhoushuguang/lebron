@@ -10,6 +10,8 @@ service Product {
   rpc OperationProducts(OperationProductsRequest) returns (OperationProductsResponse);
   rpc UpdateProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
   rpc CheckAndUpdateStock(CheckAndUpdateStockRequest) returns (CheckAndUpdateStockResponse);
+  rpc CheckProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
+  rpc RollbackProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
 }
 
 message ProductItemRequest {
