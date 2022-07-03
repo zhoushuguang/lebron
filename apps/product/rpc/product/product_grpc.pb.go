@@ -28,6 +28,8 @@ type ProductClient interface {
 	OperationProducts(ctx context.Context, in *OperationProductsRequest, opts ...grpc.CallOption) (*OperationProductsResponse, error)
 	UpdateProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
 	CheckAndUpdateStock(ctx context.Context, in *CheckAndUpdateStockRequest, opts ...grpc.CallOption) (*CheckAndUpdateStockResponse, error)
+	CheckProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
+	RollbackProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
 }
 
 type productClient struct {
@@ -92,6 +94,24 @@ func (c *productClient) CheckAndUpdateStock(ctx context.Context, in *CheckAndUpd
 	return out, nil
 }
 
+func (c *productClient) CheckProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error) {
+	out := new(UpdateProductStockResponse)
+	err := c.cc.Invoke(ctx, "/product.Product/CheckProductStock", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) RollbackProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error) {
+	out := new(UpdateProductStockResponse)
+	err := c.cc.Invoke(ctx, "/product.Product/RollbackProductStock", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
@@ -102,6 +122,8 @@ type ProductServer interface {
 	OperationProducts(context.Context, *OperationProductsRequest) (*OperationProductsResponse, error)
 	UpdateProductStock(context.Context, *UpdateProductStockRequest) (*UpdateProductStockResponse, error)
 	CheckAndUpdateStock(context.Context, *CheckAndUpdateStockRequest) (*CheckAndUpdateStockResponse, error)
+	CheckProductStock(context.Context, *UpdateProductStockRequest) (*UpdateProductStockResponse, error)
+	RollbackProductStock(context.Context, *UpdateProductStockRequest) (*UpdateProductStockResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -126,6 +148,12 @@ func (UnimplementedProductServer) UpdateProductStock(context.Context, *UpdatePro
 }
 func (UnimplementedProductServer) CheckAndUpdateStock(context.Context, *CheckAndUpdateStockRequest) (*CheckAndUpdateStockResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAndUpdateStock not implemented")
+}
+func (UnimplementedProductServer) CheckProductStock(context.Context, *UpdateProductStockRequest) (*UpdateProductStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckProductStock not implemented")
+}
+func (UnimplementedProductServer) RollbackProductStock(context.Context, *UpdateProductStockRequest) (*UpdateProductStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RollbackProductStock not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -248,6 +276,42 @@ func _Product_CheckAndUpdateStock_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_CheckProductStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProductStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).CheckProductStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/product.Product/CheckProductStock",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).CheckProductStock(ctx, req.(*UpdateProductStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_RollbackProductStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProductStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).RollbackProductStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/product.Product/RollbackProductStock",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).RollbackProductStock(ctx, req.(*UpdateProductStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -278,6 +342,14 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAndUpdateStock",
 			Handler:    _Product_CheckAndUpdateStock_Handler,
+		},
+		{
+			MethodName: "CheckProductStock",
+			Handler:    _Product_CheckProductStock_Handler,
+		},
+		{
+			MethodName: "RollbackProductStock",
+			Handler:    _Product_RollbackProductStock_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

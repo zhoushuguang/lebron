@@ -11,22 +11,22 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type UpdateProductStockLogic struct {
+type RollbackProductStockLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewUpdateProductStockLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateProductStockLogic {
-	return &UpdateProductStockLogic{
+func NewRollbackProductStockLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RollbackProductStockLogic {
+	return &RollbackProductStockLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *UpdateProductStockLogic) UpdateProductStock(in *product.UpdateProductStockRequest) (*product.UpdateProductStockResponse, error) {
-	err := l.svcCtx.ProductModel.UpdateProductStock(l.ctx, in.ProductId, in.Num)
+func (l *RollbackProductStockLogic) RollbackProductStock(in *product.UpdateProductStockRequest) (*product.UpdateProductStockResponse, error) {
+	err := l.svcCtx.ProductModel.UpdateProductStock(l.ctx, in.ProductId, -in.Num)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
