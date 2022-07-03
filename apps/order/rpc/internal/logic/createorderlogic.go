@@ -3,8 +3,6 @@ package logic
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"os"
 	"sync/atomic"
 	"time"
@@ -13,6 +11,8 @@ import (
 	"github.com/zhoushuguang/lebron/apps/order/rpc/order"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type CreateOrderLogic struct {
