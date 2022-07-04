@@ -37,7 +37,7 @@ func (l *CreateOrderDTMLogic) CreateOrderDTM(in *order.AddOrderReq) (*order.AddO
 		return nil, err
 	}
 	if userRpcRes == nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DataNoExistError), "Error! 用户不存在 Exception : %+v  ", userRpcRes)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DataNoExistError), "error! user not exist exception : %+v  ", userRpcRes)
 	}
 
 	//check product
@@ -48,12 +48,12 @@ func (l *CreateOrderDTMLogic) CreateOrderDTM(in *order.AddOrderReq) (*order.AddO
 		return nil, err
 	}
 	if productRpcRes == nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DataNoExistError), "Error! 商品不存在 Exception : %+v  ", productRpcRes)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DataNoExistError), "error! not exist exception : %+v  ", productRpcRes)
 	}
 
 	//check product stock
 	if productRpcRes.Stock <= 0 {
-		return nil, errors.Wrapf(xerr.NewErrMsg("商品库存不足"), "商品库存不足")
+		return nil, errors.Wrapf(xerr.NewErrMsg("product understock"), "product understock")
 	}
 
 	//check user_receive_address
@@ -64,7 +64,7 @@ func (l *CreateOrderDTMLogic) CreateOrderDTM(in *order.AddOrderReq) (*order.AddO
 		return nil, err
 	}
 	if receiveAddress == nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DataNoExistError), "Error! 用户收获地址 Exception : %+v  ", receiveAddress)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DataNoExistError), "error! user receive address exception : %+v  ", receiveAddress)
 	}
 
 	//generate new order id
