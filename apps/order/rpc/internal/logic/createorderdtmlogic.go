@@ -43,9 +43,9 @@ func (l *CreateOrderDTMLogic) CreateOrderDTM(in *order.AddOrderReq) (*order.AddO
 	//check product
 	var productReq product.ProductItemRequest
 	productReq.ProductId = in.Productid
-	productRpcRes, err2 := l.svcCtx.ProductRpc.Product(l.ctx, &productReq)
-	if err2 != nil {
-		return nil, err2
+	productRpcRes, err := l.svcCtx.ProductRpc.Product(l.ctx, &productReq)
+	if err != nil {
+		return nil, err
 	}
 	if productRpcRes == nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DataNoExistError), "Error! 商品不存在 Exception : %+v  ", productRpcRes)
