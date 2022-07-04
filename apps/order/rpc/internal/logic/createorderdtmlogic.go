@@ -89,7 +89,6 @@ func (l *CreateOrderDTMLogic) CreateOrderDTM(in *order.AddOrderReq) (*order.AddO
 	if err != nil {
 		return nil, err
 	}
-	logx.Info("New Shipping Primary Id:", newShippingId)
 
 	//create new orderitem
 	insertOrderitem := model.Orderitem{
@@ -106,11 +105,10 @@ func (l *CreateOrderDTMLogic) CreateOrderDTM(in *order.AddOrderReq) (*order.AddO
 	if err != nil {
 		return nil, err
 	}
-	newOrderitemId, err := insertOrderitemRes.LastInsertId()
+	_, err = insertOrderitemRes.LastInsertId()
 	if err != nil {
 		return nil, err
 	}
-	logx.Info("New newOrderitem Primary Id:", newOrderitemId)
 
 	//create new order
 	insertOrder := model.Orders{
