@@ -154,23 +154,22 @@ func (x *OrdersResponse) GetCreateTime() string {
 	return ""
 }
 
-//--------------------------------订单明细表--------------------------------
 type Orderitem struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id               int64   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                              //订单子表id
-	Orderid          string  `protobuf:"bytes,2,opt,name=orderid,proto3" json:"orderid,omitempty"`                     //订单id
-	Userid           int64   `protobuf:"varint,3,opt,name=userid,proto3" json:"userid,omitempty"`                      //用户id
-	Proid            int64   `protobuf:"varint,4,opt,name=proid,proto3" json:"proid,omitempty"`                        //商品id
-	Proname          string  `protobuf:"bytes,5,opt,name=proname,proto3" json:"proname,omitempty"`                     //商品名称
-	Proimage         string  `protobuf:"bytes,6,opt,name=proimage,proto3" json:"proimage,omitempty"`                   //商品图片地址
-	Currentunitprice float64 `protobuf:"fixed64,7,opt,name=currentunitprice,proto3" json:"currentunitprice,omitempty"` //生成订单时的商品单价，单位是元,保留两位小数
-	Quantity         int64   `protobuf:"varint,8,opt,name=quantity,proto3" json:"quantity,omitempty"`                  //商品数量
-	Totalprice       float64 `protobuf:"fixed64,9,opt,name=totalprice,proto3" json:"totalprice,omitempty"`             //商品总价,单位是元,保留两位小数
-	CreateTime       int64   `protobuf:"varint,10,opt,name=createTime,proto3" json:"createTime,omitempty"`             //创建时间
-	UpdateTime       int64   `protobuf:"varint,11,opt,name=updateTime,proto3" json:"updateTime,omitempty"`             //更新时间
+	Id               int64   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Orderid          string  `protobuf:"bytes,2,opt,name=orderid,proto3" json:"orderid,omitempty"`
+	Userid           int64   `protobuf:"varint,3,opt,name=userid,proto3" json:"userid,omitempty"`
+	Proid            int64   `protobuf:"varint,4,opt,name=proid,proto3" json:"proid,omitempty"`
+	Proname          string  `protobuf:"bytes,5,opt,name=proname,proto3" json:"proname,omitempty"`
+	Proimage         string  `protobuf:"bytes,6,opt,name=proimage,proto3" json:"proimage,omitempty"`
+	Currentunitprice float64 `protobuf:"fixed64,7,opt,name=currentunitprice,proto3" json:"currentunitprice,omitempty"`
+	Quantity         int64   `protobuf:"varint,8,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	Totalprice       float64 `protobuf:"fixed64,9,opt,name=totalprice,proto3" json:"totalprice,omitempty"`
+	CreateTime       int64   `protobuf:"varint,10,opt,name=createTime,proto3" json:"createTime,omitempty"`
+	UpdateTime       int64   `protobuf:"varint,11,opt,name=updateTime,proto3" json:"updateTime,omitempty"`
 }
 
 func (x *Orderitem) Reset() {
@@ -375,21 +374,20 @@ func (*CreateOrderResponse) Descriptor() ([]byte, []int) {
 	return file_order_proto_rawDescGZIP(), []int{4}
 }
 
-//--------------------------------订单表--------------------------------
 type Orders struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id          string  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                    //订单id
-	Userid      int64   `protobuf:"varint,2,opt,name=userid,proto3" json:"userid,omitempty"`           //用户id
-	Shoppingid  int64   `protobuf:"varint,3,opt,name=shoppingid,proto3" json:"shoppingid,omitempty"`   //收货信息表id
-	Payment     float64 `protobuf:"fixed64,4,opt,name=payment,proto3" json:"payment,omitempty"`        //实际付款金额,单位是元,保留两位小数
-	Paymenttype int64   `protobuf:"varint,5,opt,name=paymenttype,proto3" json:"paymenttype,omitempty"` //支付类型,1-在线支付
-	Postage     int64   `protobuf:"varint,6,opt,name=postage,proto3" json:"postage,omitempty"`         //运费,单位是元
-	Status      int64   `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty"`           //订单状态:0-已取消-10-未付款，20-已付款，30-待发货 40-待收货，50-交易成功，60-交易关闭
-	CreateTime  int64   `protobuf:"varint,8,opt,name=createTime,proto3" json:"createTime,omitempty"`   //创建时间
-	UpdateTime  int64   `protobuf:"varint,9,opt,name=updateTime,proto3" json:"updateTime,omitempty"`   //更新时间
+	Id          string  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Userid      int64   `protobuf:"varint,2,opt,name=userid,proto3" json:"userid,omitempty"`
+	Shoppingid  int64   `protobuf:"varint,3,opt,name=shoppingid,proto3" json:"shoppingid,omitempty"`
+	Payment     float64 `protobuf:"fixed64,4,opt,name=payment,proto3" json:"payment,omitempty"`
+	Paymenttype int64   `protobuf:"varint,5,opt,name=paymenttype,proto3" json:"paymenttype,omitempty"`
+	Postage     int64   `protobuf:"varint,6,opt,name=postage,proto3" json:"postage,omitempty"`
+	Status      int64   `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty"`
+	CreateTime  int64   `protobuf:"varint,8,opt,name=createTime,proto3" json:"createTime,omitempty"`
+	UpdateTime  int64   `protobuf:"varint,9,opt,name=updateTime,proto3" json:"updateTime,omitempty"`
 }
 
 func (x *Orders) Reset() {
@@ -492,11 +490,11 @@ type AddOrderReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Userid           int64 `protobuf:"varint,1,opt,name=userid,proto3" json:"userid,omitempty"`                     //用户id
-	Productid        int64 `protobuf:"varint,2,opt,name=productid,proto3" json:"productid,omitempty"`               //商品id
-	Quantity         int64 `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`                 //商品数量
-	Postage          int64 `protobuf:"varint,4,opt,name=postage,proto3" json:"postage,omitempty"`                   //运费,单位是元
-	ReceiveAddressId int64 `protobuf:"varint,5,opt,name=receiveAddressId,proto3" json:"receiveAddressId,omitempty"` //用户收货地址表,主键id
+	Userid           int64 `protobuf:"varint,1,opt,name=userid,proto3" json:"userid,omitempty"`
+	Productid        int64 `protobuf:"varint,2,opt,name=productid,proto3" json:"productid,omitempty"`
+	Quantity         int64 `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	Postage          int64 `protobuf:"varint,4,opt,name=postage,proto3" json:"postage,omitempty"`
+	ReceiveAddressId int64 `protobuf:"varint,5,opt,name=receiveAddressId,proto3" json:"receiveAddressId,omitempty"`
 }
 
 func (x *AddOrderReq) Reset() {
@@ -784,7 +782,7 @@ var file_order_proto_rawDesc = []byte{
 	0x02, 0x69, 0x64, 0x22, 0x37, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42,
 	0x79, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x12, 0x23, 0x0a, 0x05, 0x6f, 0x72, 0x64, 0x65, 0x72,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x4f,
-	0x72, 0x64, 0x65, 0x72, 0x73, 0x52, 0x05, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x32, 0x80, 0x02, 0x0a,
+	0x72, 0x64, 0x65, 0x72, 0x73, 0x52, 0x05, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x32, 0x93, 0x03, 0x0a,
 	0x05, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x35, 0x0a, 0x06, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73,
 	0x12, 0x14, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x4f,
@@ -793,16 +791,25 @@ var file_order_proto_rawDesc = []byte{
 	0x72, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e,
 	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x39, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x64,
-	0x65, 0x72, 0x44, 0x54, 0x4d, 0x12, 0x12, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x41, 0x64,
-	0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x6f, 0x72, 0x64, 0x65,
-	0x72, 0x2e, 0x41, 0x64, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x12, 0x3f,
-	0x0a, 0x0c, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42, 0x79, 0x49, 0x64, 0x12, 0x16,
-	0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42,
-	0x79, 0x49, 0x64, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x47,
-	0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x42,
-	0x09, 0x5a, 0x07, 0x2e, 0x2f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x6e, 0x73, 0x65, 0x12, 0x49, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x12, 0x19, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x46,
+	0x0a, 0x0d, 0x52, 0x6f, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12,
+	0x19, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x72,
+	0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x6f, 0x72, 0x64,
+	0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x39, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x44, 0x54, 0x4d, 0x12, 0x12, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72,
+	0x2e, 0x41, 0x64, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x6f,
+	0x72, 0x64, 0x65, 0x72, 0x2e, 0x41, 0x64, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73,
+	0x70, 0x12, 0x3f, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42, 0x79, 0x49,
+	0x64, 0x12, 0x16, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x6f, 0x72, 0x64, 0x65,
+	0x72, 0x2e, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65,
+	0x73, 0x70, 0x42, 0x09, 0x5a, 0x07, 0x2e, 0x2f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -831,32 +838,22 @@ var file_order_proto_goTypes = []interface{}{
 	(*GetOrderByIdResp)(nil),    // 9: order.GetOrderByIdResp
 }
 var file_order_proto_depIdxs = []int32{
-	2, // 0: order.OrdersResponse.orders:type_name -> order.OrderItem
-	0, // 1: order.Order.Orders:input_type -> order.OrdersRequest
-	3, // 2: order.Order.CreateOrder:input_type -> order.CreateOrderRequest
-	3, // 3: order.Order.CreateOrderCheck:input_type -> order.CreateOrderRequest
-	3, // 4: order.Order.RollbackOrder:input_type -> order.CreateOrderRequest
-	1, // 5: order.Order.Orders:output_type -> order.OrdersResponse
-	4, // 6: order.Order.CreateOrder:output_type -> order.CreateOrderResponse
-	4, // 7: order.Order.CreateOrderCheck:output_type -> order.CreateOrderResponse
-	4, // 8: order.Order.RollbackOrder:output_type -> order.CreateOrderResponse
-	5, // [5:9] is the sub-list for method output_type
-	1, // [1:5] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
 	2, // 0: order.OrdersResponse.orders:type_name -> order.Orderitem
 	5, // 1: order.GetOrderByIdResp.order:type_name -> order.Orders
 	0, // 2: order.Order.Orders:input_type -> order.OrdersRequest
 	3, // 3: order.Order.CreateOrder:input_type -> order.CreateOrderRequest
-	6, // 4: order.Order.CreateOrderDTM:input_type -> order.AddOrderReq
-	8, // 5: order.Order.GetOrderById:input_type -> order.GetOrderByIdReq
-	1, // 6: order.Order.Orders:output_type -> order.OrdersResponse
-	4, // 7: order.Order.CreateOrder:output_type -> order.CreateOrderResponse
-	7, // 8: order.Order.CreateOrderDTM:output_type -> order.AddOrderResp
-	9, // 9: order.Order.GetOrderById:output_type -> order.GetOrderByIdResp
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
+	3, // 4: order.Order.CreateOrderCheck:input_type -> order.CreateOrderRequest
+	3, // 5: order.Order.RollbackOrder:input_type -> order.CreateOrderRequest
+	6, // 6: order.Order.CreateOrderDTM:input_type -> order.AddOrderReq
+	8, // 7: order.Order.GetOrderById:input_type -> order.GetOrderByIdReq
+	1, // 8: order.Order.Orders:output_type -> order.OrdersResponse
+	4, // 9: order.Order.CreateOrder:output_type -> order.CreateOrderResponse
+	4, // 10: order.Order.CreateOrderCheck:output_type -> order.CreateOrderResponse
+	4, // 11: order.Order.RollbackOrder:output_type -> order.CreateOrderResponse
+	7, // 12: order.Order.CreateOrderDTM:output_type -> order.AddOrderResp
+	9, // 13: order.Order.GetOrderById:output_type -> order.GetOrderByIdResp
+	8, // [8:14] is the sub-list for method output_type
+	2, // [2:8] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name

@@ -16,14 +16,12 @@ import (
 var configFile = flag.String("f", "etc/api-api.yaml", "the etc file")
 
 func init() {
+	//close statis log
 	logx.DisableStat()
 }
 
 func main() {
 	flag.Parse()
-
-	//close statis log
-	logx.DisableStat()
 
 	var c config.Config
 	conf.MustLoad(*configFile, &c)

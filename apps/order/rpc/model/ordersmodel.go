@@ -48,7 +48,7 @@ func (m *customOrdersModel) CreateOrder(ctx context.Context, oid string, uid, pi
 }
 
 func (m *customOrdersModel) UpdateOrderStatus(ctx context.Context, oid string, status int) error {
-	ordersOrdersIdKey := fmt.Sprintf("%s%v", cacheOrdersOrdersIdPrefix, oid)
+	ordersOrdersIdKey := fmt.Sprintf("%s%v", cacheOrdersIdPrefix, oid)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
 		return conn.ExecCtx(ctx, fmt.Sprintf("UPDATE %s SET status = ? WHERE id = ?", m.table), status, oid)
 	}, ordersOrdersIdKey)
