@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -16,6 +17,7 @@ type (
 	OrdersModel interface {
 		ordersModel
 		CreateOrder(ctx context.Context, oid string, uid, pid int64) error
+		UpdateOrderStatus(ctx context.Context, oid string, status int) error
 	}
 
 	customOrdersModel struct {
@@ -42,5 +44,13 @@ func (m *customOrdersModel) CreateOrder(ctx context.Context, oid string, uid, pi
 		})
 		return nil, err
 	})
+	return err
+}
+
+func (m *customOrdersModel) UpdateOrderStatus(ctx context.Context, oid string, status int) error {
+	ordersOrdersIdKey := fmt.Sprintf("%s%v", cacheOrdersOrdersIdPrefix, oid)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
+		return conn.ExecCtx(ctx, fmt.Sprintf("UPDATE %s SET status = ? WHERE id = ?", m.table), status, oid)
+	}, ordersOrdersIdKey)
 	return err
 }

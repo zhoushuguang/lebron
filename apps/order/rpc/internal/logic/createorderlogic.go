@@ -11,6 +11,8 @@ import (
 	"github.com/zhoushuguang/lebron/apps/order/rpc/order"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type CreateOrderLogic struct {
@@ -32,7 +34,7 @@ func (l *CreateOrderLogic) CreateOrder(in *order.CreateOrderRequest) (*order.Cre
 	err := l.svcCtx.OrderModel.CreateOrder(l.ctx, oid, in.Uid, in.Pid)
 	if err != nil {
 		logx.Errorf("OrderModel.CreateOrder oid: %s uid: %d pid: %d", oid, in.Uid, in.Pid)
-		return nil, err
+		return nil, status.Errorf(codes.Internal, err.Error())
 	}
 	return &order.CreateOrderResponse{}, nil
 }

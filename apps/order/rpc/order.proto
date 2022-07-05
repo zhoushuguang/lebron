@@ -7,6 +7,8 @@ option go_package = "./order";
 service Order {
   rpc Orders(OrdersRequest) returns(OrdersResponse);
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc CreateOrderCheck(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc RollbackOrder (CreateOrderRequest) returns (CreateOrderResponse);
   rpc CreateOrderDTM(AddOrderReq) returns (AddOrderResp);
   rpc GetOrderById(GetOrderByIdReq) returns (GetOrderByIdResp);
 }
@@ -24,19 +26,19 @@ message OrdersResponse {
   string create_time = 3;
 }
 
-//--------------------------------è®¢å•æ˜ç»†è¡¨--------------------------------
+//--------------------------------¶©µ¥Ã÷Ï¸±í--------------------------------
 message Orderitem {
-  int64 id = 1; //è®¢å•å­è¡¨id
-  string orderid = 2; //è®¢å•id
-  int64 userid = 3; //ç”¨æˆ·id
-  int64 proid = 4; //å•†å“id
-  string proname = 5; //å•†å“åç§°
-  string proimage = 6; //å•†å“å›¾ç‰‡åœ°å€
-  double currentunitprice = 7; //ç”Ÿæˆè®¢å•æ—¶çš„å•†å“å•ä»·ï¼Œå•ä½æ˜¯å…ƒ,ä¿ç•™ä¸¤ä½å°æ•°
-  int64 quantity = 8; //å•†å“æ•°é‡
-  double totalprice = 9; //å•†å“æ€»ä»·,å•ä½æ˜¯å…ƒ,ä¿ç•™ä¸¤ä½å°æ•°
-  int64 createTime = 10; //åˆ›å»ºæ—¶é—´
-  int64 updateTime = 11; //æ›´æ–°æ—¶é—´
+  int64 id = 1; //¶©µ¥×Ó±íid
+  string orderid = 2; //¶©µ¥id
+  int64 userid = 3; //ÓÃ»§id
+  int64 proid = 4; //ÉÌÆ·id
+  string proname = 5; //ÉÌÆ·Ãû³Æ
+  string proimage = 6; //ÉÌÆ·Í¼Æ¬µØÖ·
+  double currentunitprice = 7; //Éú³É¶©µ¥Ê±µÄÉÌÆ·µ¥¼Û£¬µ¥Î»ÊÇÔª,±£ÁôÁ½Î»Ğ¡Êı
+  int64 quantity = 8; //ÉÌÆ·ÊıÁ¿
+  double totalprice = 9; //ÉÌÆ·×Ü¼Û,µ¥Î»ÊÇÔª,±£ÁôÁ½Î»Ğ¡Êı
+  int64 createTime = 10; //´´½¨Ê±¼ä
+  int64 updateTime = 11; //¸üĞÂÊ±¼ä
 }
 
 message CreateOrderRequest {
@@ -53,25 +55,25 @@ message CreateOrderResponse {
 // Messages
 // ------------------------------------
 
-//--------------------------------è®¢å•è¡¨--------------------------------
+//--------------------------------¶©µ¥±í--------------------------------
 message Orders {
-  string id = 1; //è®¢å•id
-  int64 userid = 2; //ç”¨æˆ·id
-  int64 shoppingid = 3; //æ”¶è´§ä¿¡æ¯è¡¨id
-  double payment = 4; //å®é™…ä»˜æ¬¾é‡‘é¢,å•ä½æ˜¯å…ƒ,ä¿ç•™ä¸¤ä½å°æ•°
-  int64 paymenttype = 5; //æ”¯ä»˜ç±»å‹,1-åœ¨çº¿æ”¯ä»˜
-  int64 postage = 6; //è¿è´¹,å•ä½æ˜¯å…ƒ
-  int64 status = 7; //è®¢å•çŠ¶æ€:0-å·²å–æ¶ˆ-10-æœªä»˜æ¬¾ï¼Œ20-å·²ä»˜æ¬¾ï¼Œ30-å¾…å‘è´§ 40-å¾…æ”¶è´§ï¼Œ50-äº¤æ˜“æˆåŠŸï¼Œ60-äº¤æ˜“å…³é—­
-  int64 createTime = 8; //åˆ›å»ºæ—¶é—´
-  int64 updateTime = 9; //æ›´æ–°æ—¶é—´
+  string id = 1; //¶©µ¥id
+  int64 userid = 2; //ÓÃ»§id
+  int64 shoppingid = 3; //ÊÕ»õĞÅÏ¢±íid
+  double payment = 4; //Êµ¼Ê¸¶¿î½ğ¶î,µ¥Î»ÊÇÔª,±£ÁôÁ½Î»Ğ¡Êı
+  int64 paymenttype = 5; //Ö§¸¶ÀàĞÍ,1-ÔÚÏßÖ§¸¶
+  int64 postage = 6; //ÔË·Ñ,µ¥Î»ÊÇÔª
+  int64 status = 7; //¶©µ¥×´Ì¬:0-ÒÑÈ¡Ïû-10-Î´¸¶¿î£¬20-ÒÑ¸¶¿î£¬30-´ı·¢»õ 40-´ıÊÕ»õ£¬50-½»Ò×³É¹¦£¬60-½»Ò×¹Ø±Õ
+  int64 createTime = 8; //´´½¨Ê±¼ä
+  int64 updateTime = 9; //¸üĞÂÊ±¼ä
 }
 
 message AddOrderReq {
-  int64 userid = 1; //ç”¨æˆ·id
-  int64 productid = 2;//å•†å“id
-  int64 quantity = 3;//å•†å“æ•°é‡
-  int64 postage = 4; //è¿è´¹,å•ä½æ˜¯å…ƒ
-  int64 receiveAddressId = 5;//ç”¨æˆ·æ”¶è´§åœ°å€è¡¨,ä¸»é”®id
+  int64 userid = 1; //ÓÃ»§id
+  int64 productid = 2;//ÉÌÆ·id
+  int64 quantity = 3;//ÉÌÆ·ÊıÁ¿
+  int64 postage = 4; //ÔË·Ñ,µ¥Î»ÊÇÔª
+  int64 receiveAddressId = 5;//ÓÃ»§ÊÕ»õµØÖ·±í,Ö÷¼üid
 }
 
 message AddOrderResp {

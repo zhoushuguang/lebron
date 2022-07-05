@@ -17,6 +17,9 @@ type (
 		ProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductListResponse, error)
 		OperationProducts(ctx context.Context, in *OperationProductsRequest, opts ...grpc.CallOption) (*OperationProductsResponse, error)
 		UpdateProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
+		CheckAndUpdateStock(ctx context.Context, in *CheckAndUpdateStockRequest, opts ...grpc.CallOption) (*CheckAndUpdateStockResponse, error)
+		CheckProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
+		RollbackProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
 	}
 
 	defaultProduct struct {
@@ -53,4 +56,19 @@ func (m *defaultProduct) OperationProducts(ctx context.Context, in *OperationPro
 func (m *defaultProduct) UpdateProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error) {
 	client := NewProductClient(m.cli.Conn())
 	return client.UpdateProductStock(ctx, in, opts...)
+}
+
+func (m *defaultProduct) CheckAndUpdateStock(ctx context.Context, in *CheckAndUpdateStockRequest, opts ...grpc.CallOption) (*CheckAndUpdateStockResponse, error) {
+	client := NewProductClient(m.cli.Conn())
+	return client.CheckAndUpdateStock(ctx, in, opts...)
+}
+
+func (m *defaultProduct) CheckProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error) {
+	client := NewProductClient(m.cli.Conn())
+	return client.CheckProductStock(ctx, in, opts...)
+}
+
+func (m *defaultProduct) RollbackProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error) {
+	client := NewProductClient(m.cli.Conn())
+	return client.RollbackProductStock(ctx, in, opts...)
 }

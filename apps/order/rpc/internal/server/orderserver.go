@@ -32,6 +32,16 @@ func (s *OrderServer) CreateOrder(ctx context.Context, in *order.CreateOrderRequ
 	return l.CreateOrder(in)
 }
 
+func (s *OrderServer) CreateOrderCheck(ctx context.Context, in *order.CreateOrderRequest) (*order.CreateOrderResponse, error) {
+	l := logic.NewCreateOrderCheckLogic(ctx, s.svcCtx)
+	return l.CreateOrderCheck(in)
+}
+
+func (s *OrderServer) RollbackOrder(ctx context.Context, in *order.CreateOrderRequest) (*order.CreateOrderResponse, error) {
+	l := logic.NewRollbackOrderLogic(ctx, s.svcCtx)
+	return l.RollbackOrder(in)
+}
+
 func (s *OrderServer) CreateOrderDTM(ctx context.Context, in *order.AddOrderReq) (*order.AddOrderResp, error) {
 	l := logic.NewCreateOrderDTMLogic(ctx, s.svcCtx)
 	return l.CreateOrderDTM(in)

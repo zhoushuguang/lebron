@@ -154,23 +154,23 @@ func (x *OrdersResponse) GetCreateTime() string {
 	return ""
 }
 
-//--------------------------------è®¢å•æ˜Žç»†è¡¨--------------------------------
+//--------------------------------¶©µ¥Ã÷Ï¸±í--------------------------------
 type Orderitem struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id               int64   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                              //è®¢å•å­è¡¨id
-	Orderid          string  `protobuf:"bytes,2,opt,name=orderid,proto3" json:"orderid,omitempty"`                     //è®¢å•id
-	Userid           int64   `protobuf:"varint,3,opt,name=userid,proto3" json:"userid,omitempty"`                      //ç”¨æˆ·id
-	Proid            int64   `protobuf:"varint,4,opt,name=proid,proto3" json:"proid,omitempty"`                        //å•†å“id
-	Proname          string  `protobuf:"bytes,5,opt,name=proname,proto3" json:"proname,omitempty"`                     //å•†å“åç§°
-	Proimage         string  `protobuf:"bytes,6,opt,name=proimage,proto3" json:"proimage,omitempty"`                   //å•†å“å›¾ç‰‡åœ°å€
-	Currentunitprice float64 `protobuf:"fixed64,7,opt,name=currentunitprice,proto3" json:"currentunitprice,omitempty"` //ç”Ÿæˆè®¢å•æ—¶çš„å•†å“å•ä»·ï¼Œå•ä½æ˜¯å…ƒ,ä¿ç•™ä¸¤ä½å°æ•°
-	Quantity         int64   `protobuf:"varint,8,opt,name=quantity,proto3" json:"quantity,omitempty"`                  //å•†å“æ•°é‡
-	Totalprice       float64 `protobuf:"fixed64,9,opt,name=totalprice,proto3" json:"totalprice,omitempty"`             //å•†å“æ€»ä»·,å•ä½æ˜¯å…ƒ,ä¿ç•™ä¸¤ä½å°æ•°
-	CreateTime       int64   `protobuf:"varint,10,opt,name=createTime,proto3" json:"createTime,omitempty"`             //åˆ›å»ºæ—¶é—´
-	UpdateTime       int64   `protobuf:"varint,11,opt,name=updateTime,proto3" json:"updateTime,omitempty"`             //æ›´æ–°æ—¶é—´
+	Id               int64   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                              //¶©µ¥×Ó±íid
+	Orderid          string  `protobuf:"bytes,2,opt,name=orderid,proto3" json:"orderid,omitempty"`                     //¶©µ¥id
+	Userid           int64   `protobuf:"varint,3,opt,name=userid,proto3" json:"userid,omitempty"`                      //ÓÃ»§id
+	Proid            int64   `protobuf:"varint,4,opt,name=proid,proto3" json:"proid,omitempty"`                        //ÉÌÆ·id
+	Proname          string  `protobuf:"bytes,5,opt,name=proname,proto3" json:"proname,omitempty"`                     //ÉÌÆ·Ãû³Æ
+	Proimage         string  `protobuf:"bytes,6,opt,name=proimage,proto3" json:"proimage,omitempty"`                   //ÉÌÆ·Í¼Æ¬µØÖ·
+	Currentunitprice float64 `protobuf:"fixed64,7,opt,name=currentunitprice,proto3" json:"currentunitprice,omitempty"` //Éú³É¶©µ¥Ê±µÄÉÌÆ·µ¥¼Û£¬µ¥Î»ÊÇÔª,±£ÁôÁ½Î»Ð¡Êý
+	Quantity         int64   `protobuf:"varint,8,opt,name=quantity,proto3" json:"quantity,omitempty"`                  //ÉÌÆ·ÊýÁ¿
+	Totalprice       float64 `protobuf:"fixed64,9,opt,name=totalprice,proto3" json:"totalprice,omitempty"`             //ÉÌÆ·×Ü¼Û,µ¥Î»ÊÇÔª,±£ÁôÁ½Î»Ð¡Êý
+	CreateTime       int64   `protobuf:"varint,10,opt,name=createTime,proto3" json:"createTime,omitempty"`             //´´½¨Ê±¼ä
+	UpdateTime       int64   `protobuf:"varint,11,opt,name=updateTime,proto3" json:"updateTime,omitempty"`             //¸üÐÂÊ±¼ä
 }
 
 func (x *Orderitem) Reset() {
@@ -375,21 +375,21 @@ func (*CreateOrderResponse) Descriptor() ([]byte, []int) {
 	return file_order_proto_rawDescGZIP(), []int{4}
 }
 
-//--------------------------------è®¢å•è¡¨--------------------------------
+//--------------------------------¶©µ¥±í--------------------------------
 type Orders struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id          string  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                    //è®¢å•id
-	Userid      int64   `protobuf:"varint,2,opt,name=userid,proto3" json:"userid,omitempty"`           //ç”¨æˆ·id
-	Shoppingid  int64   `protobuf:"varint,3,opt,name=shoppingid,proto3" json:"shoppingid,omitempty"`   //æ”¶è´§ä¿¡æ¯è¡¨id
-	Payment     float64 `protobuf:"fixed64,4,opt,name=payment,proto3" json:"payment,omitempty"`        //å®žé™…ä»˜æ¬¾é‡‘é¢,å•ä½æ˜¯å…ƒ,ä¿ç•™ä¸¤ä½å°æ•°
-	Paymenttype int64   `protobuf:"varint,5,opt,name=paymenttype,proto3" json:"paymenttype,omitempty"` //æ”¯ä»˜ç±»åž‹,1-åœ¨çº¿æ”¯ä»˜
-	Postage     int64   `protobuf:"varint,6,opt,name=postage,proto3" json:"postage,omitempty"`         //è¿è´¹,å•ä½æ˜¯å…ƒ
-	Status      int64   `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty"`           //è®¢å•çŠ¶æ€:0-å·²å–æ¶ˆ-10-æœªä»˜æ¬¾ï¼Œ20-å·²ä»˜æ¬¾ï¼Œ30-å¾…å‘è´§ 40-å¾…æ”¶è´§ï¼Œ50-äº¤æ˜“æˆåŠŸï¼Œ60-äº¤æ˜“å…³é—­
-	CreateTime  int64   `protobuf:"varint,8,opt,name=createTime,proto3" json:"createTime,omitempty"`   //åˆ›å»ºæ—¶é—´
-	UpdateTime  int64   `protobuf:"varint,9,opt,name=updateTime,proto3" json:"updateTime,omitempty"`   //æ›´æ–°æ—¶é—´
+	Id          string  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                    //¶©µ¥id
+	Userid      int64   `protobuf:"varint,2,opt,name=userid,proto3" json:"userid,omitempty"`           //ÓÃ»§id
+	Shoppingid  int64   `protobuf:"varint,3,opt,name=shoppingid,proto3" json:"shoppingid,omitempty"`   //ÊÕ»õÐÅÏ¢±íid
+	Payment     float64 `protobuf:"fixed64,4,opt,name=payment,proto3" json:"payment,omitempty"`        //Êµ¼Ê¸¶¿î½ð¶î,µ¥Î»ÊÇÔª,±£ÁôÁ½Î»Ð¡Êý
+	Paymenttype int64   `protobuf:"varint,5,opt,name=paymenttype,proto3" json:"paymenttype,omitempty"` //Ö§¸¶ÀàÐÍ,1-ÔÚÏßÖ§¸¶
+	Postage     int64   `protobuf:"varint,6,opt,name=postage,proto3" json:"postage,omitempty"`         //ÔË·Ñ,µ¥Î»ÊÇÔª
+	Status      int64   `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty"`           //¶©µ¥×´Ì¬:0-ÒÑÈ¡Ïû-10-Î´¸¶¿î£¬20-ÒÑ¸¶¿î£¬30-´ý·¢»õ 40-´ýÊÕ»õ£¬50-½»Ò×³É¹¦£¬60-½»Ò×¹Ø±Õ
+	CreateTime  int64   `protobuf:"varint,8,opt,name=createTime,proto3" json:"createTime,omitempty"`   //´´½¨Ê±¼ä
+	UpdateTime  int64   `protobuf:"varint,9,opt,name=updateTime,proto3" json:"updateTime,omitempty"`   //¸üÐÂÊ±¼ä
 }
 
 func (x *Orders) Reset() {
@@ -492,11 +492,11 @@ type AddOrderReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Userid           int64 `protobuf:"varint,1,opt,name=userid,proto3" json:"userid,omitempty"`                     //ç”¨æˆ·id
-	Productid        int64 `protobuf:"varint,2,opt,name=productid,proto3" json:"productid,omitempty"`               //å•†å“id
-	Quantity         int64 `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`                 //å•†å“æ•°é‡
-	Postage          int64 `protobuf:"varint,4,opt,name=postage,proto3" json:"postage,omitempty"`                   //è¿è´¹,å•ä½æ˜¯å…ƒ
-	ReceiveAddressId int64 `protobuf:"varint,5,opt,name=receiveAddressId,proto3" json:"receiveAddressId,omitempty"` //ç”¨æˆ·æ”¶è´§åœ°å€è¡¨,ä¸»é”®id
+	Userid           int64 `protobuf:"varint,1,opt,name=userid,proto3" json:"userid,omitempty"`                     //ÓÃ»§id
+	Productid        int64 `protobuf:"varint,2,opt,name=productid,proto3" json:"productid,omitempty"`               //ÉÌÆ·id
+	Quantity         int64 `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`                 //ÉÌÆ·ÊýÁ¿
+	Postage          int64 `protobuf:"varint,4,opt,name=postage,proto3" json:"postage,omitempty"`                   //ÔË·Ñ,µ¥Î»ÊÇÔª
+	ReceiveAddressId int64 `protobuf:"varint,5,opt,name=receiveAddressId,proto3" json:"receiveAddressId,omitempty"` //ÓÃ»§ÊÕ»õµØÖ·±í,Ö÷¼üid
 }
 
 func (x *AddOrderReq) Reset() {
@@ -831,6 +831,20 @@ var file_order_proto_goTypes = []interface{}{
 	(*GetOrderByIdResp)(nil),    // 9: order.GetOrderByIdResp
 }
 var file_order_proto_depIdxs = []int32{
+	2, // 0: order.OrdersResponse.orders:type_name -> order.OrderItem
+	0, // 1: order.Order.Orders:input_type -> order.OrdersRequest
+	3, // 2: order.Order.CreateOrder:input_type -> order.CreateOrderRequest
+	3, // 3: order.Order.CreateOrderCheck:input_type -> order.CreateOrderRequest
+	3, // 4: order.Order.RollbackOrder:input_type -> order.CreateOrderRequest
+	1, // 5: order.Order.Orders:output_type -> order.OrdersResponse
+	4, // 6: order.Order.CreateOrder:output_type -> order.CreateOrderResponse
+	4, // 7: order.Order.CreateOrderCheck:output_type -> order.CreateOrderResponse
+	4, // 8: order.Order.RollbackOrder:output_type -> order.CreateOrderResponse
+	5, // [5:9] is the sub-list for method output_type
+	1, // [1:5] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 	2, // 0: order.OrdersResponse.orders:type_name -> order.Orderitem
 	5, // 1: order.GetOrderByIdResp.order:type_name -> order.Orders
 	0, // 2: order.Order.Orders:input_type -> order.OrdersRequest
