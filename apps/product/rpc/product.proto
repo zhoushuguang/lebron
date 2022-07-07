@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package product;
-option go_package="./product";
+option go_package = "./product";
 
 service Product {
   rpc Product(ProductItemRequest) returns (ProductItem) ;
@@ -53,7 +53,10 @@ message ProductItem {
   string description = 3;
   string image_url = 4;
   int64 create_time = 5;
-  int64 stock  = 6;
+  int64 stock = 6;
+  int64 cateid = 7;
+  double price = 8;
+  int64 status = 9;
 }
 
 message UpdateProductStockRequest {

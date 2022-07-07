@@ -26,6 +26,8 @@ type OrderClient interface {
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	CreateOrderCheck(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	RollbackOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
+	CreateOrderDTM(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error)
+	GetOrderById(ctx context.Context, in *GetOrderByIdReq, opts ...grpc.CallOption) (*GetOrderByIdResp, error)
 }
 
 type orderClient struct {
@@ -72,6 +74,24 @@ func (c *orderClient) RollbackOrder(ctx context.Context, in *CreateOrderRequest,
 	return out, nil
 }
 
+func (c *orderClient) CreateOrderDTM(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error) {
+	out := new(AddOrderResp)
+	err := c.cc.Invoke(ctx, "/order.Order/CreateOrderDTM", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderClient) GetOrderById(ctx context.Context, in *GetOrderByIdReq, opts ...grpc.CallOption) (*GetOrderByIdResp, error) {
+	out := new(GetOrderByIdResp)
+	err := c.cc.Invoke(ctx, "/order.Order/GetOrderById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderServer is the server API for Order service.
 // All implementations must embed UnimplementedOrderServer
 // for forward compatibility
@@ -80,6 +100,8 @@ type OrderServer interface {
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	CreateOrderCheck(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	RollbackOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
+	CreateOrderDTM(context.Context, *AddOrderReq) (*AddOrderResp, error)
+	GetOrderById(context.Context, *GetOrderByIdReq) (*GetOrderByIdResp, error)
 	mustEmbedUnimplementedOrderServer()
 }
 
@@ -98,6 +120,12 @@ func (UnimplementedOrderServer) CreateOrderCheck(context.Context, *CreateOrderRe
 }
 func (UnimplementedOrderServer) RollbackOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RollbackOrder not implemented")
+}
+func (UnimplementedOrderServer) CreateOrderDTM(context.Context, *AddOrderReq) (*AddOrderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateOrderDTM not implemented")
+}
+func (UnimplementedOrderServer) GetOrderById(context.Context, *GetOrderByIdReq) (*GetOrderByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrderById not implemented")
 }
 func (UnimplementedOrderServer) mustEmbedUnimplementedOrderServer() {}
 
@@ -184,6 +212,42 @@ func _Order_RollbackOrder_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Order_CreateOrderDTM_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServer).CreateOrderDTM(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.Order/CreateOrderDTM",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServer).CreateOrderDTM(ctx, req.(*AddOrderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Order_GetOrderById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrderByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServer).GetOrderById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.Order/GetOrderById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServer).GetOrderById(ctx, req.(*GetOrderByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Order_ServiceDesc is the grpc.ServiceDesc for Order service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +270,14 @@ var Order_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RollbackOrder",
 			Handler:    _Order_RollbackOrder_Handler,
+		},
+		{
+			MethodName: "CreateOrderDTM",
+			Handler:    _Order_CreateOrderDTM_Handler,
+		},
+		{
+			MethodName: "GetOrderById",
+			Handler:    _Order_GetOrderById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

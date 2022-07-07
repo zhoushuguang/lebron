@@ -75,3 +75,11 @@ func (s *UserServer) GetUserCollectionList(ctx context.Context, in *user.UserCol
 	l := logic.NewGetUserCollectionListLogic(ctx, s.svcCtx)
 	return l.GetUserCollectionList(in)
 }
+
+
+
+// 根据主键id,查询收获地址
+func (s *UserServer) GetUserReceiveAddressInfo(ctx context.Context, in *user.UserReceiveAddressInfoReq) (*user.UserReceiveAddress, error) {
+	l := logic.NewGetUserReceiveAddressInfoLogic(ctx, s.svcCtx)
+	return l.GetUserReceiveAddressInfo(in)
+}

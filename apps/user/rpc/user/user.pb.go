@@ -1237,6 +1237,54 @@ func (x *UserCollectionListRes) GetProductId() []int64 {
 	return nil
 }
 
+//根据主键id,查询收获地址
+type UserReceiveAddressInfoReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id int64 `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+}
+
+func (x *UserReceiveAddressInfoReq) Reset() {
+	*x = UserReceiveAddressInfoReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_user_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserReceiveAddressInfoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserReceiveAddressInfoReq) ProtoMessage() {}
+
+func (x *UserReceiveAddressInfoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_user_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserReceiveAddressInfoReq.ProtoReflect.Descriptor instead.
+func (*UserReceiveAddressInfoReq) Descriptor() ([]byte, []int) {
+	return file_user_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *UserReceiveAddressInfoReq) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
 var File_user_proto protoreflect.FileDescriptor
 
 var file_user_proto_rawDesc = []byte{
@@ -1439,6 +1487,7 @@ var file_user_proto_goTypes = []interface{}{
 	(*UserCollectionDelRes)(nil),      // 17: user.UserCollectionDelRes
 	(*UserCollectionListReq)(nil),     // 18: user.UserCollectionListReq
 	(*UserCollectionListRes)(nil),     // 19: user.UserCollectionListRes
+	(*UserReceiveAddressInfoReq)(nil), // 14: user.UserReceiveAddressInfoReq
 }
 var file_user_proto_depIdxs = []int32{
 	0,  // 0: user.UserInfoResponse.user:type_name -> user.UserInfo
@@ -1704,6 +1753,18 @@ func file_user_proto_init() {
 		}
 		file_user_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UserCollectionListRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_user_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserReceiveAddressInfoReq); i {
 			case 0:
 				return &v.state
 			case 1:

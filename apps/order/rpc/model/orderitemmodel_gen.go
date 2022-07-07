@@ -19,10 +19,10 @@ import (
 var (
 	orderitemFieldNames          = builder.RawFieldNames(&Orderitem{})
 	orderitemRows                = strings.Join(orderitemFieldNames, ",")
-	orderitemRowsExpectAutoSet   = strings.Join(stringx.Remove(orderitemFieldNames, "`create_time`", "`update_time`", "`create_at`", "`update_at`"), ",")
+	orderitemRowsExpectAutoSet   = strings.Join(stringx.Remove(orderitemFieldNames, "`id`", "`create_time`", "`update_time`", "`create_at`", "`update_at`"), ",")
 	orderitemRowsWithPlaceHolder = strings.Join(stringx.Remove(orderitemFieldNames, "`id`", "`create_time`", "`update_time`", "`create_at`", "`update_at`"), "=?,") + "=?"
 
-	cacheOrdersOrderitemIdPrefix = "cache:orders:orderitem:id:"
+	cacheOrderitemIdPrefix = "cache:orderitem:id:"
 )
 
 type (
@@ -39,17 +39,17 @@ type (
 	}
 
 	Orderitem struct {
-		Id               int64     `db:"id"`               // 订单子表id
-		Orderid          string    `db:"orderid"`          // 订单id
-		Userid           int64     `db:"userid"`           // 用户id
-		Proid            int64     `db:"proid"`            // 商品id
-		Proname          string    `db:"proname"`          // 商品名称
-		Proimage         string    `db:"proimage"`         // 商品图片地址
-		Currentunitprice float64   `db:"currentunitprice"` // 生成订单时的商品单价，单位是元,保留两位小数
-		Quantity         int64     `db:"quantity"`         // 商品数量
-		Totalprice       float64   `db:"totalprice"`       // 商品总价,单位是元,保留两位小数
-		CreateTime       time.Time `db:"create_time"`      // 创建时间
-		UpdateTime       time.Time `db:"update_time"`      // 更新时间
+		Id           int64     `db:"id"`            // 订单子表id
+		OrderId      string    `db:"order_id"`      // 订单id
+		UserId       int64     `db:"user_id"`       // 用户id
+		ProductId    int64     `db:"product_id"`    // 商品id
+		ProductName  string    `db:"product_name"`  // 商品名称
+		ProductImage string    `db:"product_image"` // 商品图片地址
+		CurrentPrice float64   `db:"current_price"` // 生成订单时的商品单价，单位是元,保留两位小数
+		Quantity     int64     `db:"quantity"`      // 商品数量
+		TotalPrice   float64   `db:"total_price"`   // 商品总价,单位是元,保留两位小数
+		CreateTime   time.Time `db:"create_time"`   // 创建时间
+		UpdateTime   time.Time `db:"update_time"`   // 更新时间
 	}
 )
 
@@ -61,18 +61,18 @@ func newOrderitemModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultOrderitemMo
 }
 
 func (m *defaultOrderitemModel) Delete(ctx context.Context, id int64) error {
-	ordersOrderitemIdKey := fmt.Sprintf("%s%v", cacheOrdersOrderitemIdPrefix, id)
+	orderitemIdKey := fmt.Sprintf("%s%v", cacheOrderitemIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, id)
-	}, ordersOrderitemIdKey)
+	}, orderitemIdKey)
 	return err
 }
 
 func (m *defaultOrderitemModel) FindOne(ctx context.Context, id int64) (*Orderitem, error) {
-	ordersOrderitemIdKey := fmt.Sprintf("%s%v", cacheOrdersOrderitemIdPrefix, id)
+	orderitemIdKey := fmt.Sprintf("%s%v", cacheOrderitemIdPrefix, id)
 	var resp Orderitem
-	err := m.QueryRowCtx(ctx, &resp, ordersOrderitemIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
+	err := m.QueryRowCtx(ctx, &resp, orderitemIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", orderitemRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id)
 	})
@@ -87,25 +87,25 @@ func (m *defaultOrderitemModel) FindOne(ctx context.Context, id int64) (*Orderit
 }
 
 func (m *defaultOrderitemModel) Insert(ctx context.Context, data *Orderitem) (sql.Result, error) {
-	ordersOrderitemIdKey := fmt.Sprintf("%s%v", cacheOrdersOrderitemIdPrefix, data.Id)
+	orderitemIdKey := fmt.Sprintf("%s%v", cacheOrderitemIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, orderitemRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Id, data.Orderid, data.Userid, data.Proid, data.Proname, data.Proimage, data.Currentunitprice, data.Quantity, data.Totalprice)
-	}, ordersOrderitemIdKey)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?)", m.table, orderitemRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.OrderId, data.UserId, data.ProductId, data.ProductName, data.ProductImage, data.CurrentPrice, data.Quantity, data.TotalPrice)
+	}, orderitemIdKey)
 	return ret, err
 }
 
 func (m *defaultOrderitemModel) Update(ctx context.Context, data *Orderitem) error {
-	ordersOrderitemIdKey := fmt.Sprintf("%s%v", cacheOrdersOrderitemIdPrefix, data.Id)
+	orderitemIdKey := fmt.Sprintf("%s%v", cacheOrderitemIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, orderitemRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.Orderid, data.Userid, data.Proid, data.Proname, data.Proimage, data.Currentunitprice, data.Quantity, data.Totalprice, data.Id)
-	}, ordersOrderitemIdKey)
+		return conn.ExecCtx(ctx, query, data.OrderId, data.UserId, data.ProductId, data.ProductName, data.ProductImage, data.CurrentPrice, data.Quantity, data.TotalPrice, data.Id)
+	}, orderitemIdKey)
 	return err
 }
 
 func (m *defaultOrderitemModel) formatPrimary(primary interface{}) string {
-	return fmt.Sprintf("%s%v", cacheOrdersOrderitemIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheOrderitemIdPrefix, primary)
 }
 
 func (m *defaultOrderitemModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary interface{}) error {

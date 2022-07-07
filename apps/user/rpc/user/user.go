@@ -30,6 +30,8 @@ type (
 		DelUserCollection(ctx context.Context, in *UserCollectionDelReq, opts ...grpc.CallOption) (*UserCollectionDelRes, error)
 		//  收藏列表
 		GetUserCollectionList(ctx context.Context, in *UserCollectionListReq, opts ...grpc.CallOption) (*UserCollectionListRes, error)
+		// 根据主键id,查询收获地址
+		GetUserReceiveAddressInfo(ctx context.Context, in *UserReceiveAddressInfoReq, opts ...grpc.CallOption) (*UserReceiveAddress, error)
 	}
 
 	defaultUser struct {
@@ -95,4 +97,9 @@ func (m *defaultUser) DelUserCollection(ctx context.Context, in *UserCollectionD
 func (m *defaultUser) GetUserCollectionList(ctx context.Context, in *UserCollectionListReq, opts ...grpc.CallOption) (*UserCollectionListRes, error) {
 	client := NewUserClient(m.cli.Conn())
 	return client.GetUserCollectionList(ctx, in, opts...)
+}
+// 根据主键id,查询收获地址
+func (m *defaultUser) GetUserReceiveAddressInfo(ctx context.Context, in *UserReceiveAddressInfoReq, opts ...grpc.CallOption) (*UserReceiveAddress, error) {
+	client := NewUserClient(m.cli.Conn())
+	return client.GetUserReceiveAddressInfo(ctx, in, opts...)
 }

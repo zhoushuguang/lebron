@@ -39,7 +39,7 @@ func (l *OrderListLogic) OrderList(req *types.OrderListRequest) (resp *types.Ord
 	}
 	var pids []string
 	for _, o := range orderRet.Orders {
-		pids = append(pids, strconv.Itoa(int(o.ProductId)))
+		pids = append(pids, strconv.Itoa(int(o.Id)))
 	}
 	productRet, err := l.svcCtx.ProductRPC.Products(l.ctx, &product.ProductRequest{ProductIds: strings.Join(pids, ",")})
 	if err != nil {
@@ -47,9 +47,9 @@ func (l *OrderListLogic) OrderList(req *types.OrderListRequest) (resp *types.Ord
 	}
 	var orders []*types.Order
 	for _, o := range orderRet.Orders {
-		if p, ok := productRet.Products[o.ProductId]; ok {
+		if p, ok := productRet.Products[o.Id]; ok {
 			orders = append(orders, &types.Order{
-				OrderID:     o.OrderId,
+				OrderID:     o.Orderid,
 				ProductName: p.Name,
 			})
 		}

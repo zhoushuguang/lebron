@@ -4,6 +4,7 @@ import (
 	"apis/userReceiveAddress.api"
 	"apis/user.api"
 	"apis/usercollection.api"
+	"apis/order.api"
 )
 
 type (
@@ -175,7 +176,7 @@ service api-api {
 	get /v1/product/detail (ProductDetailRequest) returns (ProductDetailResponse)
 }
 
-//========================> user-user v1 <===================================
+//========================> user v1 <===================================
 //no need login
 @server(
 	prefix: v1/user
@@ -191,7 +192,7 @@ service api-api {
 @server(
 	prefix: v1/user
 	group: user
-	jwt: JwtAuth //使用jwt组件
+	jwt: JwtAuth //use jwt
 )
 service api-api {
 	@doc "get user info"
@@ -225,4 +226,20 @@ service api-api {
 	@doc "get user collection list"
 	@handler userCollectionList
 	get /getCollectionList (UserCollectionListReq) returns (UserCollectionListRes)
+}
+
+
+}
+
+//========================> order v1 <===================================
+//need login
+@server(
+	prefix: v1/order
+	group: order
+	jwt: JwtAuth //use jwt
+)
+service api-api {
+	@doc "add order"
+	@handler addOrder
+	post /add (OrderAddReq) returns (OrderAddResp)
 }

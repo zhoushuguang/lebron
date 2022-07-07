@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package order;
-option go_package="./order";
+option go_package = "./order";
 
 
 service Order {
@@ -9,6 +9,8 @@ service Order {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
   rpc CreateOrderCheck(CreateOrderRequest) returns (CreateOrderResponse);
   rpc RollbackOrder (CreateOrderRequest) returns (CreateOrderResponse);
+  rpc CreateOrderDTM(AddOrderReq) returns (AddOrderResp);
+  rpc GetOrderById(GetOrderByIdReq) returns (GetOrderByIdResp);
 }
 
 message OrdersRequest {
@@ -19,18 +21,23 @@ message OrdersRequest {
 }
 
 message OrdersResponse {
-  repeated OrderItem orders = 1;
+  repeated Orderitem orders = 1;
   bool is_end = 2;
   string create_time = 3;
 }
 
-message OrderItem {
-  string order_id = 1;
-  int64 quantity = 2;
-  float payment = 3;
-  int64 product_id = 4;
-  int64 user_id = 5;
-  int64 create_time = 6;
+message Orderitem {
+  int64 id = 1;
+  string orderid = 2;
+  int64 userid = 3;
+  int64 proid = 4;
+  string proname = 5;
+  string proimage = 6;
+  double currentunitprice = 7;
+  int64 quantity = 8;
+  double totalprice = 9;
+  int64 createTime = 10;
+  int64 updateTime = 11;
 }
 
 message CreateOrderRequest {
@@ -39,4 +46,42 @@ message CreateOrderRequest {
 }
 
 message CreateOrderResponse {
+}
+
+
+
+// ------------------------------------
+// Messages
+// ------------------------------------
+
+message Orders {
+  string id = 1;
+  int64 userid = 2;
+  int64 shoppingid = 3;
+  double payment = 4;
+  int64 paymenttype = 5;
+  int64 postage = 6;
+  int64 status = 7;
+  int64 createTime = 8;
+  int64 updateTime = 9;
+}
+
+message AddOrderReq {
+  int64 userid = 1;
+  int64 productid = 2;
+  int64 quantity = 3;
+  int64 postage = 4;
+  int64 receiveAddressId = 5;
+}
+
+message AddOrderResp {
+  string id = 1;
+}
+
+message GetOrderByIdReq {
+  int64 id = 1; //id
+}
+
+message GetOrderByIdResp {
+  Orders order = 1; //order
 }

@@ -1,0 +1,46 @@
+syntax = "v1"
+
+info(
+    title: "订单管理"
+    desc: "订单管理"
+    author: "刘羽禅"
+    email: "18500606035@163.com"
+    version: "v1"
+)
+
+// 订单表
+type Orders struct {
+    Id string `json:"id"`                 //订单id
+    Userid uint64 `json:"userid"`         //用户id
+    Shoppingid int64 `json:"shoppingid"`  //收货信息表id
+    Payment float64 `json:"payment"`      //实际付款金额,单位是元,保留两位小数
+    Paymenttype int8 `json:"paymenttype"` //支付类型,1-在线支付
+    Postage int `json:"postage"`          //运费,单位是元
+    Status int16 `json:"status"`          //订单状态:0-已取消-10-未付款，20-已付款，30-待发货 40-待收货，50-交易成功，60-交易关闭
+    CreateTime int64 `json:"create_time"` //创建时间
+    UpdateTime int64 `json:"update_time"` //更新时间
+}
+
+//创建订单
+type (
+    OrderAddReq {
+        receiveAddressId int64 `json:"receiveAddressId"`    //用户收货地址表id
+        Postage int64 `json:"postage"`                      //运费,单位是元
+        Productid int64 `json:"productid"`                  //商品id
+        Quantity int64 `json:"quantity"`                    //商品数量
+    }
+    OrderAddResp {
+        Id string `json:"id"`                 //订单id
+    }
+)
+//创建订单
+
+//订单详情
+type (
+    OrderInfoReq {
+    }
+    OrderInfoResp {
+        OrderInfo Orders `json:"orderInfo"`
+    }
+)
+//订单详情

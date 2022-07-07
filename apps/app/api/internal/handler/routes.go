@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	order "github.com/zhoushuguang/lebron/apps/app/api/internal/handler/order"
 	user "github.com/zhoushuguang/lebron/apps/app/api/internal/handler/user"
 	"github.com/zhoushuguang/lebron/apps/app/api/internal/svc"
 
@@ -112,5 +113,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/v1/user"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: order.AddOrderHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/v1/order"),
 	)
 }

@@ -133,6 +133,12 @@ message UserCollectionListRes {
 }
 // 收藏列表
 
+//根据主键id,查询收获地址
+message    UserReceiveAddressInfoReq {
+  int64 Id = 1;
+}
+//根据主键id,查询收获地址
+
 service User {
   //登录
   rpc Login(LoginRequest) returns(LoginResponse);
@@ -153,5 +159,9 @@ service User {
   rpc delUserCollection(UserCollectionDelReq) returns(UserCollectionDelRes);
   // 收藏列表
   rpc getUserCollectionList(UserCollectionListReq) returns(UserCollectionListRes);
+  //根据主键id,查询收获地址
+  rpc getUserReceiveAddressInfo(UserReceiveAddressInfoReq) returns(UserReceiveAddress);
+
+
 }
 

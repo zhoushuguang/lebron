@@ -1,9 +1,23 @@
 Name: order.rpc
-ListenOn: 127.0.0.1:9696
+ListenOn: 127.0.0.1:9003
+Mode: dev
 Etcd:
   Hosts:
-  - 127.0.0.1:2379
+    - 127.0.0.1:2379
   Key: order.rpc
+
+UserRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+
+ProductRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: product.rpc
+
 Telemetry:
   Endpoint: http://127.0.0.1:14268/api/traces
 DataSource: root:123456@tcp(127.0.0.1:3306)/orders?parseTime=true

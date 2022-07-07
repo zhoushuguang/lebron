@@ -41,3 +41,13 @@ func (s *OrderServer) RollbackOrder(ctx context.Context, in *order.CreateOrderRe
 	l := logic.NewRollbackOrderLogic(ctx, s.svcCtx)
 	return l.RollbackOrder(in)
 }
+
+func (s *OrderServer) CreateOrderDTM(ctx context.Context, in *order.AddOrderReq) (*order.AddOrderResp, error) {
+	l := logic.NewCreateOrderDTMLogic(ctx, s.svcCtx)
+	return l.CreateOrderDTM(in)
+}
+
+func (s *OrderServer) GetOrderById(ctx context.Context, in *order.GetOrderByIdReq) (*order.GetOrderByIdResp, error) {
+	l := logic.NewGetOrderByIdLogic(ctx, s.svcCtx)
+	return l.GetOrderById(in)
+}

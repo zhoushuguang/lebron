@@ -17,6 +17,11 @@ A busy sum, when there is time to make up for it
 
 [go-zero微服务实战系列（六、缓存一致性保证）](https://mp.weixin.qq.com/s/422ZHs81y7nN9Sgb_ESsgg)
 
+[go-zero微服务实战系列（七、请求量这么高该如何优化）](https://mp.weixin.qq.com/s/pPPSPZJispmITY9Wsi7hUg)
+
+[go-zero微服务实战系列（八、如何处理每秒上万次的下单请求）](https://mp.weixin.qq.com/s/OAbuzj876SrrcB5WO_2FuA)
+
+[go-zero微服务实战系列（九、极致优化秒杀性能）](https://mp.weixin.qq.com/s/8VSS9WNSy4jkOSSIA4BmLw)
 
 
 ## Basic Environment
