@@ -11,6 +11,8 @@ import (
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest"
+
+	_ "github.com/dtm-labs/driver-gozero"
 )
 
 var configFile = flag.String("f", "etc/api-api.yaml", "the etc file")

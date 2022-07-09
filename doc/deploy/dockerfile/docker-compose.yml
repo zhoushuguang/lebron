@@ -113,20 +113,20 @@ services:
       - backend
     restart: always
 
-#用到的时候 再打开
-#  dtm:
-#    image: yedf/dtm
-#    environment:
-#      - TZ=${TZ}
-#    entrypoint:
-#      - "/app/dtm/dtm"
-#      - "-c=/app/dtm/configs/etc.yaml"
-#    privileged: true
-#    volumes:
-#      - ./dtm/etc.yml:/app/dtm/configs/etc.yaml # 将 dtm 配置文件挂载到容器里
-#    ports:
-#      - "36789:36789"  # DTM HTTP 协议端口号
-#      - "36790:36790"  # DTM gRPC 协议端口号
-#    networks:
-#      - backend
-#    restart: always
+#分布式事务解决方案DTM
+  dtm:
+    image: yedf/dtm
+    environment:
+      - TZ=${TZ}
+    entrypoint:
+      - "/app/dtm/dtm"
+      - "-c=/app/dtm/configs/config.yaml"
+    privileged: true
+    volumes: #把本地文件挂载到容器里的指定的目录
+      - ./dtm/config.yml:/app/dtm/configs/config.yaml # 将 dtm 配置文件挂载到容器里
+    ports:
+      - "36789:36789"  # DTM HTTP 协议端口号
+      - "36790:36790"  # DTM gRPC 协议端口号
+    networks:
+      - backend
+    restart: always

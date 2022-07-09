@@ -27,6 +27,7 @@ type OrderClient interface {
 	CreateOrderCheck(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	RollbackOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	CreateOrderDTM(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error)
+	CreateOrderDTMRevert(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error)
 	GetOrderById(ctx context.Context, in *GetOrderByIdReq, opts ...grpc.CallOption) (*GetOrderByIdResp, error)
 }
 
@@ -83,6 +84,15 @@ func (c *orderClient) CreateOrderDTM(ctx context.Context, in *AddOrderReq, opts 
 	return out, nil
 }
 
+func (c *orderClient) CreateOrderDTMRevert(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error) {
+	out := new(AddOrderResp)
+	err := c.cc.Invoke(ctx, "/order.Order/CreateOrderDTMRevert", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderClient) GetOrderById(ctx context.Context, in *GetOrderByIdReq, opts ...grpc.CallOption) (*GetOrderByIdResp, error) {
 	out := new(GetOrderByIdResp)
 	err := c.cc.Invoke(ctx, "/order.Order/GetOrderById", in, out, opts...)
@@ -101,6 +111,7 @@ type OrderServer interface {
 	CreateOrderCheck(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	RollbackOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	CreateOrderDTM(context.Context, *AddOrderReq) (*AddOrderResp, error)
+	CreateOrderDTMRevert(context.Context, *AddOrderReq) (*AddOrderResp, error)
 	GetOrderById(context.Context, *GetOrderByIdReq) (*GetOrderByIdResp, error)
 	mustEmbedUnimplementedOrderServer()
 }
@@ -123,6 +134,9 @@ func (UnimplementedOrderServer) RollbackOrder(context.Context, *CreateOrderReque
 }
 func (UnimplementedOrderServer) CreateOrderDTM(context.Context, *AddOrderReq) (*AddOrderResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrderDTM not implemented")
+}
+func (UnimplementedOrderServer) CreateOrderDTMRevert(context.Context, *AddOrderReq) (*AddOrderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateOrderDTMRevert not implemented")
 }
 func (UnimplementedOrderServer) GetOrderById(context.Context, *GetOrderByIdReq) (*GetOrderByIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrderById not implemented")
@@ -230,6 +244,24 @@ func _Order_CreateOrderDTM_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Order_CreateOrderDTMRevert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServer).CreateOrderDTMRevert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.Order/CreateOrderDTMRevert",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServer).CreateOrderDTMRevert(ctx, req.(*AddOrderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Order_GetOrderById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetOrderByIdReq)
 	if err := dec(in); err != nil {
@@ -274,6 +306,10 @@ var Order_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateOrderDTM",
 			Handler:    _Order_CreateOrderDTM_Handler,
+		},
+		{
+			MethodName: "CreateOrderDTMRevert",
+			Handler:    _Order_CreateOrderDTMRevert_Handler,
 		},
 		{
 			MethodName: "GetOrderById",

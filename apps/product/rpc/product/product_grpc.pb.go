@@ -30,6 +30,8 @@ type ProductClient interface {
 	CheckAndUpdateStock(ctx context.Context, in *CheckAndUpdateStockRequest, opts ...grpc.CallOption) (*CheckAndUpdateStockResponse, error)
 	CheckProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
 	RollbackProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
+	DecrStock(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error)
+	DecrStockRevert(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error)
 }
 
 type productClient struct {
@@ -112,6 +114,24 @@ func (c *productClient) RollbackProductStock(ctx context.Context, in *UpdateProd
 	return out, nil
 }
 
+func (c *productClient) DecrStock(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error) {
+	out := new(DecrStockResponse)
+	err := c.cc.Invoke(ctx, "/product.Product/DecrStock", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) DecrStockRevert(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error) {
+	out := new(DecrStockResponse)
+	err := c.cc.Invoke(ctx, "/product.Product/DecrStockRevert", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
@@ -124,6 +144,8 @@ type ProductServer interface {
 	CheckAndUpdateStock(context.Context, *CheckAndUpdateStockRequest) (*CheckAndUpdateStockResponse, error)
 	CheckProductStock(context.Context, *UpdateProductStockRequest) (*UpdateProductStockResponse, error)
 	RollbackProductStock(context.Context, *UpdateProductStockRequest) (*UpdateProductStockResponse, error)
+	DecrStock(context.Context, *DecrStockRequest) (*DecrStockResponse, error)
+	DecrStockRevert(context.Context, *DecrStockRequest) (*DecrStockResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -154,6 +176,12 @@ func (UnimplementedProductServer) CheckProductStock(context.Context, *UpdateProd
 }
 func (UnimplementedProductServer) RollbackProductStock(context.Context, *UpdateProductStockRequest) (*UpdateProductStockResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RollbackProductStock not implemented")
+}
+func (UnimplementedProductServer) DecrStock(context.Context, *DecrStockRequest) (*DecrStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DecrStock not implemented")
+}
+func (UnimplementedProductServer) DecrStockRevert(context.Context, *DecrStockRequest) (*DecrStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DecrStockRevert not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -312,6 +340,42 @@ func _Product_RollbackProductStock_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_DecrStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DecrStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).DecrStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/product.Product/DecrStock",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).DecrStock(ctx, req.(*DecrStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_DecrStockRevert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DecrStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).DecrStockRevert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/product.Product/DecrStockRevert",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).DecrStockRevert(ctx, req.(*DecrStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -350,6 +414,14 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RollbackProductStock",
 			Handler:    _Product_RollbackProductStock_Handler,
+		},
+		{
+			MethodName: "DecrStock",
+			Handler:    _Product_DecrStock_Handler,
+		},
+		{
+			MethodName: "DecrStockRevert",
+			Handler:    _Product_DecrStockRevert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

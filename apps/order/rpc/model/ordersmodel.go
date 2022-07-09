@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/zeromicro/go-zero/core/stores/cache"
+	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
@@ -16,8 +17,11 @@ type (
 	// and implement the added methods in customOrdersModel.
 	OrdersModel interface {
 		ordersModel
+		FindOneByUid(ctx context.Context, uid int64) (*Orders, error)
 		CreateOrder(ctx context.Context, oid string, uid, pid int64) error
 		UpdateOrderStatus(ctx context.Context, oid string, status int) error
+		TxInsert(tx *sql.Tx, data *Orders) (sql.Result, error)
+		TxUpdate(tx *sql.Tx, data *Orders) error
 	}
 
 	customOrdersModel struct {
@@ -52,5 +56,37 @@ func (m *customOrdersModel) UpdateOrderStatus(ctx context.Context, oid string, s
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
 		return conn.ExecCtx(ctx, fmt.Sprintf("UPDATE %s SET status = ? WHERE id = ?", m.table), status, oid)
 	}, ordersOrdersIdKey)
+	return err
+}
+
+//func (m *defaultOrdersModel) TxInsert(tx *sql.Tx, data *Orders) (sql.Result, error) {
+func (m *customOrdersModel) TxInsert(tx *sql.Tx, data *Orders) (sql.Result, error) {
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?)", m.table, ordersRowsExpectAutoSet)
+	ret, err := tx.Exec(query, data.Id, data.Userid, data.Shoppingid, data.Payment, data.Paymenttype, data.Postage, data.Status)
+	return ret, err
+}
+
+func (m *customOrdersModel) FindOneByUid(ctx context.Context, uid int64) (*Orders, error) {
+	var resp Orders
+
+	query := fmt.Sprintf("select %s from %s where `uid` = ? order by create_time desc limit 1", ordersRows, m.table)
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, uid)
+
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *customOrdersModel) TxUpdate(tx *sql.Tx, data *Orders) error {
+	productIdKey := fmt.Sprintf("%s%v", cacheOrdersIdPrefix, data.Id)
+	_, err := m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, ordersRowsWithPlaceHolder)
+		return tx.Exec(query, data.Userid, data.Shoppingid, data.Payment, data.Paymenttype, data.Postage, data.Status, data.Id)
+	}, productIdKey)
 	return err
 }

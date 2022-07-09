@@ -23,6 +23,8 @@ A busy sum, when there is time to make up for it
 
 [go-zero微服务实战系列（九、极致优化秒杀性能）](https://mp.weixin.qq.com/s/8VSS9WNSy4jkOSSIA4BmLw)
 
+[go-zero微服务实战系列（十、分布式事务如何实现)](https://mp.weixin.qq.com/s/OWlck8Vgcy6hvyEc3EYGSw)
+
 
 ## Basic Environment
 | Name    | Description              | Link                    |

@@ -47,6 +47,11 @@ func (s *OrderServer) CreateOrderDTM(ctx context.Context, in *order.AddOrderReq)
 	return l.CreateOrderDTM(in)
 }
 
+func (s *OrderServer) CreateOrderDTMRevert(ctx context.Context, in *order.AddOrderReq) (*order.AddOrderResp, error) {
+	l := logic.NewCreateOrderDTMRevertLogic(ctx, s.svcCtx)
+	return l.CreateOrderDTMRevert(in)
+}
+
 func (s *OrderServer) GetOrderById(ctx context.Context, in *order.GetOrderByIdReq) (*order.GetOrderByIdResp, error) {
 	l := logic.NewGetOrderByIdLogic(ctx, s.svcCtx)
 	return l.GetOrderById(in)
