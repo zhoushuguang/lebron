@@ -47,7 +47,8 @@ func (l *AddOrderLogic) AddOrder(req *types.OrderAddReq) (resp *types.OrderAddRe
 	}
 
 	// dtm 服务的 etcd 注册地址
-	var dtmServer = "etcd://127.0.0.1:2379/dtmservice"
+	//var dtmServer = "etcd://127.0.0.1:2379/dtmservice"
+	var dtmServer = "discov://127.0.0.1:2379/dtmservice"
 	// 创建一个gid
 	gid := dtmgrpc.MustGenGid(dtmServer)
 	// 创建一个saga协议的事务

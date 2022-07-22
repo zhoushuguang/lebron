@@ -39,9 +39,8 @@
 # 微服务
 MicroService:
   Driver: 'dtm-driver-gozero'           # 要处理注册/发现的驱动程序的名称
-  Target: 'etcd://etcd:2379/dtmservice' # 注册 dtm 服务的 etcd 地址
-  #Target: 'etcd://127.0.0.1:2379/dtmservice'
-  EndPoint: 'dtm:36790'
+  Target: 'etcd://192.168.20.110:2379/dtmservice'
+  EndPoint: '0.0.0.0:36790'
 
 # 以下配置的单位为'秒'
 # TransCronInterval: 3
