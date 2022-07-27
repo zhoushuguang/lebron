@@ -17,6 +17,7 @@ type (
 		CreateOrderCheck(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 		RollbackOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 		CreateOrderDTM(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error)
+		CreateOrderDTMRevert(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error)
 		GetOrderById(ctx context.Context, in *GetOrderByIdReq, opts ...grpc.CallOption) (*GetOrderByIdResp, error)
 	}
 
@@ -54,6 +55,11 @@ func (m *defaultOrder) RollbackOrder(ctx context.Context, in *CreateOrderRequest
 func (m *defaultOrder) CreateOrderDTM(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error) {
 	client := NewOrderClient(m.cli.Conn())
 	return client.CreateOrderDTM(ctx, in, opts...)
+}
+
+func (m *defaultOrder) CreateOrderDTMRevert(ctx context.Context, in *AddOrderReq, opts ...grpc.CallOption) (*AddOrderResp, error) {
+	client := NewOrderClient(m.cli.Conn())
+	return client.CreateOrderDTMRevert(ctx, in, opts...)
 }
 
 func (m *defaultOrder) GetOrderById(ctx context.Context, in *GetOrderByIdReq, opts ...grpc.CallOption) (*GetOrderByIdResp, error) {

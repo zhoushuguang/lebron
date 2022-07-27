@@ -1,0 +1,51 @@
+# 指定要存储trans状态的存储驱动
+# Store: 
+
+### 默认存储驱动
+#   Driver: 'boltdb'
+
+### redis 存储驱动
+#   Driver: 'redis'
+#   Host: 'localhost'
+#   User: ''
+#   Password: ''
+#   Port: 6379
+
+### mysql 存储驱动
+#   Driver: 'mysql'
+#   Host: 'mysql'
+#   User: 'root'
+#   Password: '123456'
+#   Port: 3306
+
+### postgres 存储驱动
+#   Driver: 'postgres'
+#   Host: 'localhost'
+#   User: 'postgres'
+#   Password: 'mysecretpassword'
+#   Port: '5432'
+
+### 以下配置仅适用于 postgres/mysql 驱动
+#   MaxOpenConns: 500
+#   MaxIdleConns: 500
+#   ConnMaxLifeTime: 5
+#   TransGlobalTable: 'dtm.trans_global'
+#   TransBranchOpTable: 'dtm.trans_branch_op'
+
+### 以下配置仅适用于 redis/boltdb 驱动
+#   DataExpire: 604800 # Trans 过期时间
+#   RedisPrefix: '{}'  # Redis 存储前缀
+
+# 微服务
+MicroService:
+  Driver: 'dtm-driver-gozero'           # 要处理注册/发现的驱动程序的名称
+  Target: 'etcd://192.168.20.110:2379/dtmservice'
+  EndPoint: '0.0.0.0:36790'
+
+# 以下配置的单位为'秒'
+# TransCronInterval: 3
+# TimeoutToFail: 35
+# RetryInterval: 10
+
+# 日志等级
+# LogLevel: 'info' 

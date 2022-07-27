@@ -20,6 +20,8 @@ type (
 		CheckAndUpdateStock(ctx context.Context, in *CheckAndUpdateStockRequest, opts ...grpc.CallOption) (*CheckAndUpdateStockResponse, error)
 		CheckProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
 		RollbackProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error)
+		DecrStock(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error)
+		DecrStockRevert(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error)
 	}
 
 	defaultProduct struct {
@@ -71,4 +73,14 @@ func (m *defaultProduct) CheckProductStock(ctx context.Context, in *UpdateProduc
 func (m *defaultProduct) RollbackProductStock(ctx context.Context, in *UpdateProductStockRequest, opts ...grpc.CallOption) (*UpdateProductStockResponse, error) {
 	client := NewProductClient(m.cli.Conn())
 	return client.RollbackProductStock(ctx, in, opts...)
+}
+
+func (m *defaultProduct) DecrStock(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error) {
+	client := NewProductClient(m.cli.Conn())
+	return client.DecrStock(ctx, in, opts...)
+}
+
+func (m *defaultProduct) DecrStockRevert(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error) {
+	client := NewProductClient(m.cli.Conn())
+	return client.DecrStockRevert(ctx, in, opts...)
 }

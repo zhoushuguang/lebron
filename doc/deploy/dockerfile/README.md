@@ -19,12 +19,14 @@ DATA_PATH_HOST=E:\dockerdata
 - 启动全部服务
 
 ```bash
-docker-compose up -d
+docker-compose up
+docker-compose up -d 
+-d表示后台运行
 ```
 
 - 按需启动部分服务
 
 ```bash
-docker-compose up -d etcd golang mysql redis
+docker-compose up -d --net=host etcd mysql redis dtm
 ```
 

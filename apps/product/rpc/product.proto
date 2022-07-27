@@ -12,6 +12,8 @@ service Product {
   rpc CheckAndUpdateStock(CheckAndUpdateStockRequest) returns (CheckAndUpdateStockResponse);
   rpc CheckProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
   rpc RollbackProductStock(UpdateProductStockRequest) returns (UpdateProductStockResponse);
+  rpc DecrStock(DecrStockRequest) returns(DecrStockResponse);
+  rpc DecrStockRevert(DecrStockRequest) returns(DecrStockResponse);
 }
 
 message ProductItemRequest {
@@ -72,4 +74,12 @@ message CheckAndUpdateStockRequest {
 }
 
 message CheckAndUpdateStockResponse {
+}
+
+message DecrStockRequest {
+  int64 id = 1;
+  int64 num = 2;
+}
+
+message DecrStockResponse {
 }
