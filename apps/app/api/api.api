@@ -228,9 +228,6 @@ service api-api {
 	get /getCollectionList (UserCollectionListReq) returns (UserCollectionListRes)
 }
 
-
-}
-
 //========================> order v1 <===================================
 //need login
 @server(
