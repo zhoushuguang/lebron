@@ -5,7 +5,9 @@ import (
 
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/config"
 	"github.com/zhoushuguang/lebron/apps/product/rpc/internal/model"
+	"github.com/zhoushuguang/lebron/pkg/orm"
 
+	"github.com/jinzhu/gorm"
 	"github.com/zeromicro/go-zero/core/collection"
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -22,6 +24,7 @@ type ServiceContext struct {
 	BizRedis       *redis.Redis
 	SingleGroup    singleflight.Group
 	LocalCache     *collection.Cache
+	orm            *gorm.DB
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -37,5 +40,11 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		OperationModel: model.NewProductOperationModel(conn, c.CacheRedis),
 		BizRedis:       redis.New(c.BizRedis.Host, redis.WithPass(c.BizRedis.Pass)),
 		LocalCache:     localCache,
+		orm: orm.NewMysql(&orm.Config{
+			DSN:         c.DataSource,
+			Active:      20,
+			Idle:        10,
+			IdleTimeout: time.Hour * 24,
+		}),
 	}
 }
