@@ -43,7 +43,7 @@ func (m *customOrdersModel) CreateOrder(ctx context.Context, oid string, uid, pi
 			if err != nil {
 				return err
 			}
-			_, err = session.ExecCtx(ctx, "INSERT INTO orderitem(orderid, userid, proid) VALUES(?,?,?)", "", uid, pid)
+			_, err = session.ExecCtx(ctx, "INSERT INTO orderitem(order_id, user_id, product_id) VALUES(?,?,?)", "", uid, pid)
 			return err
 		})
 		return nil, err
