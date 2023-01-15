@@ -91,7 +91,7 @@ services:
    #   - backend
    # restart: always
 
-  #rafana:
+  #grafana:
   # image: grafana/grafana:8.0.6
   # container_name: grafana
   # environment:
