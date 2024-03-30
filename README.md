@@ -1,8 +1,9 @@
 ## 最新基于go-zero的Go实战干货视频教程来啦
 上B站搜索"只喝冰美式的程序员"即可找到我
 
-## WeChat
-15951703783  备注: 我爱golang
+## 微信公众号
+![qrcode_for_gh_884b10e30cf6_344](https://github.com/zhoushuguang/lebron/assets/16539942/8c67ebc6-1d23-4f9c-b97d-c0be3b89db41)
+
 
 ## lebron
 Highly concurrent mall system built on go-zero
